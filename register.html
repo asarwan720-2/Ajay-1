@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #f2f2f2;
+      text-align: center;
+    }
+
+    h1 {
+      color: green;
+      margin-top: 30px;
+    }
+
+    .box {
+      background: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 90%;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 30px;
+      border: none;
+      background: #f2f2f2;
+      font-size: 16px;
+    }
+
+    button {
+      width: 90%;
+      padding: 15px;
+      background: green;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    .back {
+      margin-top: 15px;
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Register</h1>
+
+<div class="box">
+  <input type="text" id="mobile" placeholder="Enter Mobile">
+  <input type="password" id="password" placeholder="Enter Password">
+
+  <button onclick="register()">REGISTER</button>
+
+  <p class="back" onclick="goLogin()">Back to Login</p>
+</div>
+
+<script>
+function register() {
+  var mobile = document.getElementById("mobile").value;
+  var password = document.getElementById("password").value;
+
+  if(mobile == "" || password == ""){
+    alert("Fill all fields");
+    return;
+  }
+
+  fetch("PASTE_YOUR_SCRIPT_URL_HERE", {
+    method: "POST",
+    body: JSON.stringify({
+      type: "register",
+      mobile: mobile,
+      password: password
+    })
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert(data);
+    window.location.href = "index.html";
+  });
+}
+
+function goLogin(){
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
