@@ -116,34 +116,30 @@ function goRegister(){
     window.location.href = "register.html";
 }
 
-  function loginUser() {
-  var mobile = document.getElementById("mobile").value;
-  var password = document.getElementById("password").value;
+function loginUser() {
+    var mobile = document.getElementById("mobile").value;
+    var password = document.getElementById("password").value;
 
-  if (mobile == "" || password == "") {
-    alert("Fill all fields");
-    return;
-  }
-
-fetch("https://script.google.com/macros/s/AKfycbzzCIG2ixt48a5pVgUGci8tfSBV8...", {
-    method: "POST",
-    body: JSON.stringify({
-        mobile: mobile,
-        password: password,
-        type: "login"
-    })
-})
-.then(res => res.text())
-.then(data => {
-    alert(data);
-
-    if (data.toLowerCase().includes("success")) {
-        window.location.href = "home.html";
+    if (mobile == "" || password == "") {
+        alert("Fill all fields");
+        return;
     }
-});
-  })
 
+    fetch("https://script.google.com/macros/s/AKfycbzzCIG2ixt48a5pVgUgCi8tfSBV81lVwTdWnlW8tHjK73YY24A5eL-ThG2T1OxI7JyW9g/exec", {
+        method: "POST",
+        body: JSON.stringify({
+            mobile: mobile,
+            password: password,
+            type: "login"
+        })
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data);
+
+        if (data.toLowerCase().includes("success")) {
+            window.location.href = "home.html";
+        }
+    });
 }
 </script>
-</body>
-</html>
