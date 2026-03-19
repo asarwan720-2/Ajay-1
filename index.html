@@ -135,7 +135,7 @@ function loginUser() {
     .then(res => res.text())
     .then(data => {
         alert(data);
-
+localStorage.setItem("mobile", mobile);
         if (data.toLowerCase().includes("success")) {
             window.location.href = "home.html";
         }
