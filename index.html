@@ -125,13 +125,22 @@ function goRegister(){
     return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycbzzCIG2ixt48a5pVgUGci8tfSBV8I1vWTdWmIw8thjK73YY24A5eL-ThG2T10x17Jw9/exec", {
+fetch("https://script.google.com/macros/s/AKfycbzzCIG2ixt48a5pVgUGci8tfSBV8...", {
     method: "POST",
     body: JSON.stringify({
-      mobile: mobile,
-      password: password,
-      type: "login"
+        mobile: mobile,
+        password: password,
+        type: "login"
     })
+})
+.then(res => res.text())
+.then(data => {
+    alert(data);
+
+    if (data.toLowerCase().includes("success")) {
+        window.location.href = "home.html";
+    }
+});
   })
   .then(res => res.text())
   .then(data => {
