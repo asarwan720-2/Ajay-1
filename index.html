@@ -137,7 +137,7 @@ function goRegister(){
   .then(data => {
     alert(data);
 
-    if (data.includes("Login Success")) {
+    if (data.toLowerCase().includes("success"))
       window.location.href = "home.html"; // ya home.html
     }
   });
