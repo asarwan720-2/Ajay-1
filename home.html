@@ -1,96 +1,38 @@
-<!DOCTYPE html>
 <html>
+
 <head>
-  <title>Wallet</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #111;
-      color: white;
-    }
+<style>
+.top-bar{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+}
 
-    .box {
-      margin-top: 50px;
-    }
+.id-box{
+  background:green;
+  color:white;
+  padding:10px 20px;
+  border-radius:20px;
+}
 
-    input {
-      padding: 10px;
-      margin: 10px;
-      width: 200px;
-      border-radius: 5px;
-      border: none;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      background: gold;
-      color: black;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    h1 {
-      color: gold;
-    }
-  </style>
+.wallet-box{
+  background:red;
+  color:white;
+  padding:10px 20px;
+  border-radius:20px;
+}
+</style>
 </head>
 
 <body>
 
-<h1>My Wallet</h1>
-
-<div class="box">
-  <h2 id="balance">Balance: ₹0</h2>
-
-  <input type="number" id="amount" placeholder="Enter Amount"><br>
-
-  <button onclick="addMoney()">Add Money</button>
+<div class="top-bar">
+  <div class="id-box">ID: 12345</div>
+  <div class="wallet-box">₹ 500</div>
 </div>
 
-<script>
-  var mobile = localStorage.getItem("mobile");
-
-  function addMoney() {
-    var amount = document.getElementById("amount").value;
-
-    if (amount == "") {
-      alert("Enter amount");
-      return;
-    }
-
-    fetch("https://script.google.com/macros/s/AKfycbwK1JlOooRRgg6bFsAE7p56u83nrpm6UWns60ca87plDjr6LTy1Sr-jPTncw4x0vFgSEQ/exec", {
-      method: "POST",
-      body: JSON.stringify({
-        mobile: mobile,
-        amount: amount,
-        type: "add"
-      })
-    })
-    .then(res => res.text())
-    .then(data => {
-      alert(data);
-      loadBalance();
-    });
-  }
-
-  function loadBalance() {
-    fetch("https://script.google.com/macros/s/AKfycbwK1JlOooRRgg6bFsAE7p56u83nrpm6UWns60ca87plDjr6LTy1Sr-jPTncw4x0vFgSEQ/exec", {
-      method: "POST",
-      body: JSON.stringify({
-        mobile: mobile,
-        type: "get"
-      })
-    })
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("balance").innerText = "Balance: ₹" + data;
-    });
-  }
-
-  loadBalance();
-</script>
+<h1>Welcome to Home Page</h1>
 
 </body>
+
 </html>
