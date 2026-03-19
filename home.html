@@ -43,6 +43,7 @@ console.log("Mobile:", mobile);
 fetch(url)
 .then(res => res.json())
 .then(data => {
+  data = data.data;   // 👈 ये add करना है
   data.forEach(user => {
     if(String(user.mobile) == String(mobile)){
       document.getElementById("balance").innerText = user.Balance;
