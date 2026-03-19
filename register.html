@@ -11,9 +11,22 @@
       text-align: center;
     }
 
+    .top {
+      background: red;
+      height: 50px;
+    }
+
+    .logo {
+      margin-top: 20px;
+    }
+
+    .logo img {
+      width: 100px;
+      border-radius: 50%;
+    }
+
     h1 {
-      color: green;
-      margin-top: 30px;
+      color: red;
     }
 
     .box {
@@ -34,10 +47,10 @@
       font-size: 16px;
     }
 
-    button {
+    .btn {
       width: 90%;
       padding: 15px;
-      background: green;
+      background: #2d8cff;
       color: white;
       border: none;
       border-radius: 30px;
@@ -54,19 +67,29 @@
 
 <body>
 
+<div class="top"></div>
+
+<div class="logo">
+  <img src="https://i.ibb.co/6bQGZpG/gold-logo.png">
+</div>
+
 <h1>Register</h1>
 
 <div class="box">
-  <input type="text" id="mobile" placeholder="Enter Mobile">
-  <input type="password" id="password" placeholder="Enter Password">
 
-  <button onclick="register()">REGISTER</button>
+  <input type="text" id="mobile" placeholder="Mobile Number">
+
+  <input type="password" id="password" placeholder="Password">
+
+  <button class="btn" onclick="registerUser()">REGISTER</button>
 
   <p class="back" onclick="goLogin()">Back to Login</p>
+
 </div>
 
 <script>
-function register() {
+function registerUser() {
+
   var mobile = document.getElementById("mobile").value;
   var password = document.getElementById("password").value;
 
@@ -75,19 +98,19 @@ function register() {
     return;
   }
 
-  fetch("PASTE_YOUR_SCRIPT_URL_HERE", {
+  fetch("https://script.google.com/macros/s/AKfycbzzCIG2ixt48a5pVgUgCi8tfSBV81lVwTdWnlW8tHjK73YY24A5eL-ThG2T1OxI7JyW9g/exec", {
     method: "POST",
     body: JSON.stringify({
-      type: "register",
       mobile: mobile,
-      password: password
+      password: password,
+      type: "register"
     })
   })
   .then(res => res.text())
   .then(data => {
     alert(data);
-    window.location.href = "index.html";
   });
+
 }
 
 function goLogin(){
