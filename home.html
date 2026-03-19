@@ -45,7 +45,7 @@ fetch(url)
 .then(data => {
   data = data.data;   // 👈 ये add करना है
   data.forEach(user => {
-    if(String(user.mobile) == String(mobile)){
+  if(String(user.Mobile) == String(mobile)){
       document.getElementById("balance").innerText = user.Balance;
       document.getElementById("userid").innerText = user.ID;
     }
