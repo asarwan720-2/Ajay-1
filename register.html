@@ -109,7 +109,11 @@ function registerUser() {
   .then(res => res.text())
   .then(data => {
     alert(data);
-  });
+
+    if (data.includes("Success")) {
+        window.location.href = "index.html"; // login page open
+    }
+});
 
 }
 
