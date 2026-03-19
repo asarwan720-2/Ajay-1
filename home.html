@@ -39,12 +39,12 @@
 var url = "https://script.google.com/macros/s/AKfycbwK1JlOooRRgg6bFsAE7p56u83nrpm6UWns60ca87plDjr6LTy1Sr-jPTncw4x0vFgSEQ/exec";
 
 var mobile = localStorage.getItem("mobile");
-
+console.log("Mobile:", mobile);
 fetch(url)
 .then(res => res.json())
 .then(data => {
   data.forEach(user => {
-    if(user.mobile == mobile){
+    if(String(user.mobile) == String(mobile)){
       document.getElementById("balance").innerText = user.balance;
       document.getElementById("userid").innerText = user.id;
     }
