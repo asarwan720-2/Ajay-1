@@ -124,21 +124,8 @@ function loginUser() {
         return;
     }
 
-    fetch("https://script.google.com/macros/s/AKfycbzzCIG2ixt48a5pVgUgCi8tfSBV81lVwTdWnlW8tHjK73YY24A5eL-ThG2T1OxI7JyW9g/exec", {
-        method: "POST",
-        body: JSON.stringify({
-            mobile: mobile,
-            password: password,
-            type: "login"
-        })
-    })
-    .then(res => res.text())
-    .then(data => {
-        alert(data);
-localStorage.setItem("mobile", mobile);
-        if (data.toLowerCase().includes("success")) {
-            window.location.href = "home.html";
-        }
-    });
+  alert("Login temporarily band hai (security fix)");
+    
+    
 }
 </script>
