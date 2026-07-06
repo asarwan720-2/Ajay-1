@@ -1,121 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Ajay Khaiwal Login</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Club</title>
 
 <style>
-body {
-  font-family: Arial;
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#111;
+    color:#fff;
+    text-align:center;
+    padding:20px;
 }
 
-.box {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  width: 300px;
-  text-align: center;
-  box-shadow: 0px 5px 20px rgba(0,0,0,0.2);
+h1{
+    color:gold;
 }
 
-h2 {
-  margin-bottom: 10px;
+.btn{
+    display:block;
+    width:90%;
+    max-width:350px;
+    margin:20px auto;
+    padding:15px;
+    background:#28a745;
+    color:#fff;
+    text-decoration:none;
+    font-size:22px;
+    font-weight:bold;
+    border-radius:8px;
 }
 
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+.box{
+    background:#222;
+    margin:15px auto;
+    padding:20px;
+    max-width:400px;
+    border-radius:10px;
+    border:1px solid #444;
 }
 
-button {
-  width: 95%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  background: #4facfe;
-  color: white;
-  font-size: 16px;
-}
-
-button:hover {
-  background: #007bff;
-}
-
-#result {
-  margin-top: 15px;
-  font-weight: bold;
+.float-btn{
+    position:fixed;
+    left:5%;
+    bottom:15px;
+    width:90%;
+    background:#28a745;
+    color:#fff;
+    text-decoration:none;
+    padding:18px;
+    font-size:22px;
+    font-weight:bold;
+    border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
+<h1>🏆 GOLDEN CLUB</h1>
+
+<p>
+Golden Club me aapka swagat hai.<br>
+Yahan milenge aapko Satta aur Matka ki game khelne ka moka.
+</p>
+
+<a href="signup.html" class="btn">SIGN UP NOW</a>
+
 <div class="box">
-  <h2>Signup</h2>
-  <input id="mobile" placeholder="Mobile"><br>
-  <input id="password" placeholder="Password"><br>
-  <button onclick="signup()">Signup</button>
-
-  <h2>Login</h2>
-  <input id="lmobile" placeholder="Mobile"><br>
-  <input id="lpassword" placeholder="Password"><br>
-  <button onclick="login()">Login</button>
-
-  <div id="result"></div>
+<h2>🎯 SATTA KING GAME</h2>
 </div>
 
-<script>
-const supabase = window.supabase.createClient(
-  "https://kvvmkddbkgrtiiuswikt.supabase.co",
-  "YOUR_API_KEY_HERE"
-);
+<div class="box">
+<h2>🎲 MATKA GAME</h2>
+</div>
 
-// SIGNUP
-async function signup() {
-  let mobile = document.getElementById("mobile").value;
-  let password = document.getElementById("password").value;
-
-  let { error } = await supabase
-    .from("users")
-    .insert([{ mobile: mobile, password: password, amount: 0 }]);
-
-  if (error) {
-    alert(error.message);
-  } else {
-    alert("Signup Success");
-  }
-}
-
-// LOGIN
-async function login() {
-  let mobile = document.getElementById("lmobile").value;
-  let password = document.getElementById("lpassword").value;
-
-  let { data } = await supabase
-    .from("users")
-    .select("*")
-    .eq("mobile", mobile)
-    .eq("password", password);
-
-  if (data && data.length > 0) {
-    let user = data[0];
-    document.getElementById("result").innerHTML =
-      "ID: " + user.id + "<br>Wallet: ₹" + user.amount;
-  } else {
-    alert("Login Failed");
-  }
-}
-</script>
+<a href="signup.html" class="float-btn">SIGN UP NOW</a>
 
 </body>
 </html>
