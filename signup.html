@@ -24,6 +24,8 @@
 
     .logo img {
       width: 100px;
+      height: 100px;
+      object-fit: cover;
       border-radius: 50%;
     }
 
@@ -59,6 +61,7 @@
       border-radius: 30px;
       font-size: 18px;
       margin-top: 10px;
+      cursor: pointer;
     }
 
     .back {
@@ -81,41 +84,89 @@
 
 <div class="box">
 
-  <input id="name" type="text" placeholder="Full Name">
+  <input
+    id="name"
+    type="text"
+    placeholder="Full Name"
+  >
 
-  <input id="mobile" type="text" placeholder="Mobile Number">
+  <input
+    id="mobile"
+    type="text"
+    placeholder="Mobile Number"
+  >
 
-  <input id="password" type="password" placeholder="Password">
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+  >
 
-  <button class="register-btn" onclick="signup()">REGISTER NOW</button>
+  <input
+    id="ref_code"
+    type="text"
+    placeholder="Referral Code"
+  >
 
-  <p class="back" onclick="goLogin()">Back to Login</p>
+  <button class="register-btn" onclick="signup()">
+    REGISTER NOW
+  </button>
+
+  <p class="back" onclick="goLogin()">
+    Back to Login
+  </p>
 
 </div>
 
 <script>
 
-// 🔥 SUPABASE (SAME)
-const SUPABASE_URL = "https://katbdbzoufiblnnsoxkk.supabase.co";
-const SUPABASE_KEY = "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a";
+// ================================
+// SUPABASE
+// ================================
 
-const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL =
+"https://katbdbzoufiblnnsoxkk.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 
-// 🔥 SIGNUP FUNCTION (SAME)
+// ================================
+// SIGNUP
+// ================================
+
 async function signup() {
 
-  let name = document.getElementById("name").value;
-  let mobile = document.getElementById("mobile").value;
-  let password = document.getElementById("password").value;
+  let name =
+    document.getElementById("name").value.trim();
 
-  // validation
-  if(!name || !mobile || !password){
-    alert("Sab fill kar");
+  let mobile =
+    document.getElementById("mobile").value.trim();
+
+  let password =
+    document.getElementById("password").value;
+
+  let ref_code =
+    document.getElementById("ref_code").value.trim();
+
+
+  // VALIDATION
+
+  if (!name || !mobile || !password || !ref_code) {
+
+    alert("Sabhi fields fill karo");
+
     return;
   }
 
-  // insert data
+
+  // INSERT INTO SUPABASE
+
   let { data, error } = await client
     .from("login")
     .insert([
@@ -123,22 +174,38 @@ async function signup() {
         name: name,
         mobile: mobile,
         password: password,
-        balance: 0
+        balance: 0,
+        ref_code: ref_code
       }
     ]);
 
-  if(error){
+
+  // ERROR
+
+  if (error) {
+
     alert("Error: " + error.message);
-  } else {
-    alert("Signup Success ✅");
-    window.location.href = "index.html";
+
+    return;
   }
+
+
+  // SUCCESS
+
+  alert("Signup Success ✅");
+
+  window.location.href = "index.html";
 }
 
 
-// 🔥 BACK TO LOGIN
-function goLogin(){
+// ================================
+// BACK TO LOGIN
+// ================================
+
+function goLogin() {
+
   window.location.href = "index.html";
+
 }
 
 </script>
