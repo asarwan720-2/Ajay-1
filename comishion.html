@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Commission</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f2f2f2;
+}
+
+.header{
+  background:red;
+  color:white;
+  padding:18px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.container{
+  padding:15px;
+}
+
+.user-card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:15px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.user-name{
+  font-size:20px;
+  font-weight:bold;
+  color:#222;
+}
+
+.total{
+  margin-top:10px;
+  font-size:25px;
+  font-weight:bold;
+  color:green;
+}
+
+.commission{
+  background:white;
+  padding:16px;
+  border-radius:15px;
+  margin-bottom:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
+}
+
+.amount{
+  font-size:20px;
+  font-weight:bold;
+  color:green;
+}
+
+.date{
+  margin-top:7px;
+  color:#777;
+  font-size:14px;
+}
+
+.loading{
+  text-align:center;
+  padding:20px;
+  color:#777;
+}
+
+.error{
+  text-align:center;
+  color:red;
+  padding:20px;
+}
+
+.empty{
+  background:white;
+  padding:25px;
+  text-align:center;
+  border-radius:15px;
+  color:#777;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  My Commission
+</div>
+
+<div class="container">
+
+  <div class="user-card">
+
+    <div class="user-name" id="userName">
+      Loading...
+    </div>
+
+    <div class="total">
+      ₹<span id="totalAmount">0</span>
+    </div>
+
+  </div>
+
+
+  <div id="commissionList">
+
+    <div class="loading">
+      Loading Commission...
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+// =====================================
+// SUPABASE
+// =====================================
+
+const SUPABASE_URL =
+"https://katbdbzoufiblnnsoxkk.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a";
+
+const client = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+// =====================================
+// USER ID FROM LOGIN
+// =====================================
+
+const userId =
+localStorage.getItem("user_id");
+
+
+// =====================================
+// LOAD COMMISSION
+// =====================================
+
+async function loadCommission(){
+
+  if(!userId){
+
+    alert("Please login first");
+
+    window.location.href="index.html";
+
+    return;
+  }
+
+
+  // =====================================
+  // GET USER NAME
+  // =====================================
+
+  const { data:userData, error:userError } =
+    await client
+    .from("login")
+    .select("id,name")
+    .eq("id", userId)
+    .single();
+
+
+  if(userError || !userData){
+
+    console.log(userError);
+
+    document.getElementById("userName").innerText =
+      "User Not Found";
+
+    return;
+  }
+
+
+  document.getElementById("userName").innerText =
+    userData.name || "User";
+
+
+  // =====================================
+  // GET COMMISSION
+  // =====================================
+
+  const { data:commissionData, error:commissionError } =
+    await client
+    .from("commissions")
+    .select("id,amount,created_at")
+    .eq("user_id", userId)
+    .order("created_at", {ascending:false});
+
+
+  if(commissionError){
+
+    console.log(commissionError);
+
+    document.getElementById("commissionList").innerHTML =
+      '<div class="error">Commission load nahi ho rahi</div>';
+
+    return;
+  }
+
+
+  // =====================================
+  // NO COMMISSION
+  // =====================================
+
+  if(!commissionData || commissionData.length === 0){
+
+    document.getElementById("commissionList").innerHTML =
+      '<div class="empty">Abhi koi commission nahi hai</div>';
+
+    document.getElementById("totalAmount").innerText =
+      "0";
+
+    return;
+  }
+
+
+  // =====================================
+  // TOTAL
+  // =====================================
+
+  let total = 0;
+
+  commissionData.forEach(function(item){
+
+    total += Number(item.amount || 0);
+
+  });
+
+
+  document.getElementById("totalAmount").innerText =
+    total.toFixed(2);
+
+
+  // =====================================
+  // SHOW LIST
+  // =====================================
+
+  let html = "";
+
+
+  commissionData.forEach(function(item){
+
+    let date = new Date(item.created_at);
+
+    let formattedDate =
+      date.toLocaleDateString("en-IN", {
+        day:"2-digit",
+        month:"2-digit",
+        year:"numeric"
+      });
+
+
+    html += `
+
+      <div class="commission">
+
+        <div class="amount">
+          ₹${Number(item.amount || 0).toFixed(2)}
+        </div>
+
+        <div class="date">
+          Date: ${formattedDate}
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  document.getElementById("commissionList").innerHTML =
+    html;
+
+}
+
+
+// =====================================
+// START
+// =====================================
+
+loadCommission();
+
+</script>
+
+</body>
+</html>
