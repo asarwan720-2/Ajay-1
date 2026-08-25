@@ -9,7 +9,7 @@ const MENU_ITEMS = [
 {name:"📊 Result", link:"market.html"}, // ✅ LOCAL PAGE
 
 {name:"💰 Winning", link:"userwining.html"},
-{name:"📊 Game Rates", link:"#"},
+{name:"📊 Game Rates", link:"recodechart.html"},
 {name:"📄 Terms", link:"terms.html"},
 {name:"🚪 Logout", link:"logout"}
 ];
