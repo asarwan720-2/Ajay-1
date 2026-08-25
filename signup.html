@@ -105,7 +105,7 @@
   <input
     id="ref_code"
     type="text"
-    placeholder="Referral Code"
+    placeholder="Referral Code (Optional)"
   >
 
   <button class="register-btn" onclick="signup()">
@@ -155,17 +155,21 @@ async function signup() {
     document.getElementById("ref_code").value.trim();
 
 
+  // ================================
   // VALIDATION
+  // ================================
 
-  if (!name || !mobile || !password || !ref_code) {
+  if (!name || !mobile || !password) {
 
-    alert("Sabhi fields fill karo");
+    alert("Name, Mobile aur Password fill karo");
 
     return;
   }
 
 
+  // ================================
   // INSERT INTO SUPABASE
+  // ================================
 
   let { data, error } = await client
     .from("login")
@@ -175,12 +179,15 @@ async function signup() {
         mobile: mobile,
         password: password,
         balance: 0,
-        ref_code: ref_code
+        ref_code: ref_code || null
       }
-    ]);
+    ])
+    .select();
 
 
+  // ================================
   // ERROR
+  // ================================
 
   if (error) {
 
@@ -190,7 +197,9 @@ async function signup() {
   }
 
 
+  // ================================
   // SUCCESS
+  // ================================
 
   alert("Signup Success ✅");
 
