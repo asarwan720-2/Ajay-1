@@ -127,7 +127,14 @@ cursor:pointer;
   oninput="this.value=this.value.replace(/[^0-9]/g,'')"
 >
 <label>ENTER AMOUNT</label>
-<input id="amt">
+<input
+  id="amt"
+  type="number"
+  inputmode="numeric"
+  min="0"
+  step="1"
+  placeholder="Enter amount"
+>
 <button onclick="generateCopy()">ADD</button>
 
 <table id="table" border="1" width="100%">
