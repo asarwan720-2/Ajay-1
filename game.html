@@ -118,7 +118,14 @@ cursor:pointer;
 
 <div id="copy" class="game container">
 <label>ENTER DIGIT</label>
-<input id="digits">
+<input
+  id="digits"
+  type="text"
+  inputmode="numeric"
+  pattern="[0-9]*"
+  autocomplete="off"
+  oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+>
 <label>ENTER AMOUNT</label>
 <input id="amt">
 <button onclick="generateCopy()">ADD</button>
