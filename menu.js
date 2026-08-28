@@ -80,7 +80,7 @@ function handleMenu(link){
 
 // ✅ Game Rates popup
 if(link === "#"){
-alert("RATE LIST:-*\n\n• जोड़ी रेट: 1 ke 90, 10 ke 950\n\n• हर्फ़ रेट: 10 ke 90, 100 ke 950");
+alert("RATE LIST:-*\n\n• जोड़ी रेट: 1 ke 90, 10 ke 950\n\n• हर्फ़ रेट: 10 ke 90, 100 ke 900");
 return;
 }
 
