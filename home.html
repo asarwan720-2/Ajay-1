@@ -8,13 +8,14 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
 }
 
 body{
   margin:0;
-  font-family:Arial, sans-serif;
+  font-family:Arial,sans-serif;
   background:#f5f5f5;
   color:#222;
   padding-bottom:85px;
@@ -29,6 +30,8 @@ body{
   padding-top:1px;
 }
 
+/* Menu */
+
 #menuBtn{
   position:absolute;
   left:28px;
@@ -41,6 +44,8 @@ body{
   font-weight:300;
 }
 
+/* User ID */
+
 #userId{
   position:absolute;
   left:22px;
@@ -48,30 +53,39 @@ body{
   background:white;
   color:#222;
   min-width:120px;
+  max-width:150px;
   text-align:center;
-  padding:14px 15px;
+  padding:14px 12px;
   border-radius:35px;
-  font-size:18px;
+  font-size:16px;
   font-weight:bold;
   z-index:999;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
-/* Wallet */
+
+/* Wallet Amount */
+
 #wallet{
   position:absolute;
-  right:28px;
-  top:72px;
-  background:transparent;
-  color:white;
-  padding:8px 4px;
-  font-size:17px;
+  left:50%;
+  transform:translateX(-50%);
+  top:73px;
+  background:white;
+  color:#222;
+  min-width:140px;
+  text-align:center;
+  padding:14px 18px;
+  border-radius:35px;
+  font-size:20px;
   font-weight:bold;
   z-index:999;
   cursor:pointer;
-  width:65px;
-  text-align:center;
 }
 
 /* Help */
+
 .helpBox{
   position:absolute;
   right:25px;
@@ -80,6 +94,8 @@ body{
   text-align:center;
   font-size:19px;
   font-weight:bold;
+  cursor:pointer;
+  z-index:999;
 }
 
 .helpIcon{
@@ -88,13 +104,16 @@ body{
   margin-bottom:1px;
 }
 
+
 /* ================= MAIN ================= */
 
 .main{
   padding:18px 14px 0;
 }
 
-/* Banner */
+
+/* ================= BANNER ================= */
+
 .banner{
   width:100%;
   height:238px;
@@ -105,14 +124,16 @@ body{
   margin-bottom:25px;
 }
 
-.banner img{
+.banner iframe{
   width:100%;
   height:100%;
-  object-fit:cover;
+  border:0;
   display:block;
 }
 
-/* Slogan */
+
+/* ================= SLOGAN ================= */
+
 .slogan{
   text-align:center;
   font-size:24px;
@@ -124,6 +145,7 @@ body{
 .slogan span{
   color:#d7a928;
 }
+
 
 /* ================= ACTION BUTTONS ================= */
 
@@ -164,6 +186,7 @@ body{
   white-space:nowrap;
 }
 
+
 /* ================= GAME BOX ================= */
 
 .container{
@@ -185,7 +208,6 @@ body{
   overflow:hidden;
 }
 
-/* Open / Close */
 .gameTop{
   display:flex;
   justify-content:space-between;
@@ -261,6 +283,7 @@ body{
   font-weight:bold;
 }
 
+
 /* ================= WHATSAPP ================= */
 
 .whatsapp{
@@ -280,6 +303,7 @@ body{
   z-index:500;
   box-shadow:0 3px 8px rgba(0,0,0,.25);
 }
+
 
 /* ================= BOTTOM NAV ================= */
 
@@ -326,6 +350,7 @@ body{
   color:white;
 }
 
+
 /* ================= MOBILE ================= */
 
 @media(max-width:420px){
@@ -340,23 +365,32 @@ body{
     font-size:39px;
   }
 
-   #userId{
-    left:22px;
-    transform:none;
+  #userId{
+    left:18px;
     top:73px;
-    min-width:120px;
-    font-size:18px;
-    padding:14px 15px;
+    min-width:110px;
+    max-width:125px;
+    padding:14px 10px;
+    font-size:15px;
   }
+
   #wallet{
-    right:25px;
-    top:74px;
-    font-size:17px;
+    left:50%;
+    transform:translateX(-50%);
+    top:73px;
+    min-width:130px;
+    padding:14px 15px;
+    font-size:18px;
   }
 
   .helpBox{
-    right:24px;
+    right:20px;
     top:118px;
+    font-size:17px;
+  }
+
+  .helpIcon{
+    font-size:29px;
   }
 
   .banner{
@@ -395,13 +429,32 @@ body{
   }
 }
 
-/* Smaller phones */
+
+/* ================= SMALL PHONES ================= */
 
 @media(max-width:360px){
 
   #userId{
-    min-width:205px;
-    font-size:22px;
+    left:10px;
+    min-width:95px;
+    max-width:105px;
+    font-size:13px;
+    padding:13px 8px;
+  }
+
+  #wallet{
+    min-width:115px;
+    font-size:16px;
+    padding:13px 10px;
+  }
+
+  .helpBox{
+    right:10px;
+    font-size:15px;
+  }
+
+  .helpIcon{
+    font-size:27px;
   }
 
   .banner{
@@ -430,11 +483,15 @@ body{
   .gameNumber{
     font-size:30px;
   }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <!-- ================= TOP HEADER ================= -->
 
@@ -444,21 +501,22 @@ body{
   <div id="menuBtn" onclick="openMenu()">☰</div>
 
 
-  <!-- USER ID - LEFT -->
+  <!-- USER ID -->
   <div id="userId">
     ID: Loading...
   </div>
 
 
-  <!-- WALLET AMOUNT - CENTER -->
-  <div id="wallet">
+  <!-- WALLET AMOUNT -->
+  <div id="wallet" onclick="goWallet()">
     💰 ₹0
   </div>
 
 
-  <!-- HELP / WHATSAPP - RIGHT -->
-  <div class="helpBox"
-       onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
+  <!-- ONLY ONE HELP -->
+  <div
+    class="helpBox"
+    onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
 
     <span class="helpIcon">🎧</span>
     Help
@@ -467,127 +525,244 @@ body{
 
 </div>
 
-  </div>
-
-</div>
-</div>
-  </div>
-
-</div>
 
 
 <!-- ================= MAIN ================= -->
 
 <div class="main">
 
-  <!-- Banner -->
- <!-- Banner -->
-<div class="banner" onclick="window.location.href='frem.html'" style="cursor:pointer;">
-  <img
-    src="https://via.placeholder.com/900x300/ffffff/000000?text=POWER+MATKA"
-    alt="Banner">
-</div>
 
-  <!-- Slogan -->
-  <div class="slogan">
-    किस्मत आपका इंतज़ार कर रही है!
-    <span>🍀💵🛡️</span>
-    सुरक्षित
+  <!-- ================= BANNER ================= -->
+
+  <div class="banner">
+
+    <iframe
+      src="frem.html"
+      title="Frem">
+    </iframe>
+
   </div>
+
+
+  <!-- ================= SLOGAN ================= -->
+
+  <div class="slogan">
+
+    किस्मत आपका इंतज़ार कर रही है!
+
+    <span>🍀💵🛡️</span>
+
+    सुरक्षित
+
+  </div>
+
 
 
   <!-- ================= ACTION ================= -->
 
   <div class="actionBar">
 
-    <div class="actionBtn add" onclick="go('deposit.html')">
-      <div class="actionIcon">👛</div>
-      <div class="actionText">पैसा डालो</div>
+
+    <div
+      class="actionBtn add"
+      onclick="go('deposit.html')">
+
+      <div class="actionIcon">
+        👛
+      </div>
+
+      <div class="actionText">
+        पैसा डालो
+      </div>
+
     </div>
 
-    <div class="actionBtn withdraw" onclick="go('withdraw.html')">
-      <div class="actionIcon">💰</div>
-      <div class="actionText">पैसा निकालो</div>
+
+
+    <div
+      class="actionBtn withdraw"
+      onclick="go('withdraw.html')">
+
+      <div class="actionIcon">
+        💰
+      </div>
+
+      <div class="actionText">
+        पैसा निकालो
+      </div>
+
     </div>
 
-    <div class="actionBtn" onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
-      <div class="actionIcon">🟢</div>
-      <div class="actionText">WhatsApp</div>
+
+
+    <div
+      class="actionBtn"
+      onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
+
+      <div class="actionIcon">
+        🟢
+      </div>
+
+      <div class="actionText">
+        WhatsApp
+      </div>
+
     </div>
 
-    <div class="actionBtn" onclick="shareApp()">
-      <div class="actionIcon">➤</div>
-      <div class="actionText">Telegram</div>
+
+
+    <div
+      class="actionBtn"
+      onclick="shareApp()">
+
+      <div class="actionIcon">
+        ➤
+      </div>
+
+      <div class="actionText">
+        Telegram
+      </div>
+
     </div>
+
 
   </div>
 
 
+
   <!-- ================= GAME LIST ================= -->
 
-  <div class="container" id="container"></div>
+  <div
+    class="container"
+    id="container">
+  </div>
+
 
 </div>
 
 
-<!-- WhatsApp -->
+
+<!-- ================= WHATSAPP ================= -->
+
 <a
   class="whatsapp"
   href="https://api.whatsapp.com/send?phone=919053922906"
   target="_blank">
+
   💬
+
 </a>
+
 
 
 <!-- ================= BOTTOM NAV ================= -->
 
 <div id="bottomNav">
 
-  <div class="navBtn">
-    <div class="navIcon">♛</div>
-    <div class="navText">Results</div>
-  </div>
 
   <div class="navBtn">
-    <div class="navIcon">◷</div>
-    <div class="navText">History</div>
+
+    <div class="navIcon">
+      ♛
+    </div>
+
+    <div class="navText">
+      Results
+    </div>
+
   </div>
+
+
+
+  <div class="navBtn">
+
+    <div class="navIcon">
+      ◷
+    </div>
+
+    <div class="navText">
+      History
+    </div>
+
+  </div>
+
+
 
   <div class="navBtn active">
-    <div class="navIcon">🎮</div>
-    <div class="navText">Home</div>
+
+    <div class="navIcon">
+      🎮
+    </div>
+
+    <div class="navText">
+      Home
+    </div>
+
   </div>
 
-  <div class="navBtn">
-    <div class="navIcon">◔</div>
-    <div class="navText">Chart</div>
-  </div>
+
 
   <div class="navBtn">
-    <div class="navIcon">▷</div>
-    <div class="navText">Share</div>
+
+    <div class="navIcon">
+      ◔
+    </div>
+
+    <div class="navText">
+      Chart
+    </div>
+
   </div>
+
+
+
+  <div class="navBtn">
+
+    <div class="navIcon">
+      ▷
+    </div>
+
+    <div class="navText">
+      Share
+    </div>
+
+  </div>
+
 
 </div>
 
 
+
 <script src="menu.js"></script>
+
 
 <script>
 
-/* ================= SAME SYSTEM ================= */
+/* ================= USER ================= */
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user =
+  JSON.parse(localStorage.getItem("user"));
 
 if(!user){
-  window.location.href = "index.html";
+
+  window.location.href =
+    "index.html";
+
 }
 
 
-const client = supabase.createClient(
-  "https://katbdbzoufiblnnsoxkk.supabase.co",
-  "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a"
-);
+
+/* ================= SUPABASE ================= */
+
+const client =
+  supabase.createClient(
+
+    "https://katbdbzoufiblnnsoxkk.supabase.co",
+
+    "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a"
+
+  );
+
 
 
 /* ================= WALLET ================= */
@@ -595,27 +770,33 @@ const client = supabase.createClient(
 async function loadWallet(){
 
   const { data } = await client
+
     .from("login")
+
     .select("balance")
+
     .eq("id", user.id)
+
     .single();
+
 
   if(data){
 
-  document.getElementById("userId").innerText =
-  "ID: " + user.id;
+    /* USER ID */
 
-document.getElementById("wallet").innerHTML =
-  "💰 Wallet";
-    document.getElementById("userId").innerText = 
-  "ID: " + user.id;
+    document.getElementById("userId").innerText =
+      "ID: " + user.id;
 
-document.getElementById("walletInfo").innerText = 
-  "₹" + data.balance;
+
+    /* ACTUAL BALANCE */
+
+    document.getElementById("wallet").innerText =
+      "💰 ₹" + data.balance;
 
   }
 
 }
+
 
 
 /* ================= GAME STATUS ================= */
@@ -625,29 +806,64 @@ function checkStatus(openTime, closeTime){
   if(!openTime || !closeTime)
     return false;
 
-  let now = new Date();
 
-  const [oh, om] = openTime.split(":");
-  const [ch, cm] = closeTime.split(":");
+  let now =
+    new Date();
 
-  let open = new Date();
-  open.setHours(oh, om, 0);
 
-  let close = new Date();
-  close.setHours(ch, cm, 0);
+  const [oh, om] =
+    openTime.split(":");
+
+
+  const [ch, cm] =
+    closeTime.split(":");
+
+
+  let open =
+    new Date();
+
+  open.setHours(
+    oh,
+    om,
+    0
+  );
+
+
+  let close =
+    new Date();
+
+  close.setHours(
+    ch,
+    cm,
+    0
+  );
+
 
   if(close < open){
 
-    close.setDate(close.getDate() + 1);
+    close.setDate(
+      close.getDate() + 1
+    );
+
 
     if(now < open){
-      now.setDate(now.getDate() + 1);
+
+      now.setDate(
+        now.getDate() + 1
+      );
+
     }
 
   }
 
-  return (now >= open && now <= close);
+
+  return (
+    now >= open &&
+    now <= close
+  );
+
 }
+
 
 
 /* ================= LOAD GAMES ================= */
@@ -655,36 +871,70 @@ function checkStatus(openTime, closeTime){
 async function loadButtons(){
 
   let { data } = await client
+
     .from("Game result")
-    .select("name, number, open, close");
+
+    .select(
+      "name, number, open, close"
+    );
+
 
   if(!data)
     return;
 
+
   data.sort((a,b)=>{
 
-    return checkStatus(b.open,b.close) -
-           checkStatus(a.open,a.close);
+    return (
+
+      checkStatus(
+        b.open,
+        b.close
+      )
+
+      -
+
+      checkStatus(
+        a.open,
+        a.close
+      )
+
+    );
 
   });
 
 
+
   let container =
-    document.getElementById("container");
+    document.getElementById(
+      "container"
+    );
+
 
   container.innerHTML = "";
 
 
+
   data.forEach(item => {
 
+
     let isOpen =
-      checkStatus(item.open,item.close);
+      checkStatus(
+        item.open,
+        item.close
+      );
+
 
 
     let btn =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    btn.className = "btn";
+
+    btn.className =
+      "btn";
+
 
 
     btn.innerHTML = `
@@ -692,64 +942,102 @@ async function loadButtons(){
       <div class="gameTop">
 
         <div class="gameTimeLabel">
+
           OPEN:
-          <span>${item.open}</span>
+
+          <span>
+            ${item.open}
+          </span>
+
         </div>
 
+
         <div class="gameTimeLabel">
+
           CLOSE:
-          <span>${item.close}</span>
+
+          <span>
+            ${item.close}
+          </span>
+
         </div>
 
       </div>
+
 
 
       <div class="gameName">
+
         ${item.name}
+
         ${isOpen ? " 🔥" : ""}
+
       </div>
+
 
 
       <div class="gameNumberRow">
 
+
         <div class="numberBox">
 
           <div class="gameNumber">
-            ${item.number || '**'}
+
+            ${item.number || "**"}
+
           </div>
 
           <div class="numberLabel">
+
             कल
+
           </div>
 
         </div>
+
 
 
         <div class="arrow">
+
           ›
+
         </div>
+
 
 
         <div class="numberBox">
 
           <div class="gameNumber">
+
             XX
+
           </div>
 
           <div class="numberLabel">
+
             आज
+
           </div>
 
         </div>
 
+
       </div>
+
 
 
       <div class="statusBox">
-        ${isOpen ? "खेलें" : "बंद"}
+
+        ${
+          isOpen
+          ? "खेलें"
+          : "बंद"
+        }
+
       </div>
 
     `;
+
 
 
     if(isOpen){
@@ -761,34 +1049,45 @@ async function loadButtons(){
           item.name
         );
 
+
         window.location.href =
           "game.html";
 
       };
 
     }
+
     else{
 
-      btn.style.opacity = "0.72";
+      btn.style.opacity =
+        "0.72";
 
     }
 
 
-    container.appendChild(btn);
+
+    container.appendChild(
+      btn
+    );
 
   });
 
 }
 
 
+
 /* ================= NAVIGATION ================= */
 
 function go(page){
 
-  window.location.href = page;
+  window.location.href =
+    page;
 
 }
 
+
+
+/* ================= SHARE ================= */
 
 function shareApp(){
 
@@ -809,6 +1108,9 @@ function shareApp(){
 }
 
 
+
+/* ================= WALLET PAGE ================= */
+
 function goWallet(){
 
   window.location.href =
@@ -817,9 +1119,15 @@ function goWallet(){
 }
 
 
+
+/* ================= LOGOUT ================= */
+
 function logout(){
 
-  localStorage.removeItem("user");
+  localStorage.removeItem(
+    "user"
+  );
+
 
   window.location.href =
     "index.html";
@@ -827,11 +1135,13 @@ function logout(){
 }
 
 
+
 /* ================= START ================= */
 
 loadWallet();
 
 loadButtons();
+
 
 
 /* ================= AUTO REFRESH ================= */
@@ -846,5 +1156,6 @@ setInterval(()=>{
 
 </script>
 
+
 </body>
-  </html>
+</html>
