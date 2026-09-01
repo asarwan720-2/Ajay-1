@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +88,6 @@ body{
 /* CARD */
 
 .card{
-
   width:100%;
 
   background:white;
@@ -107,7 +105,6 @@ body{
   align-items:center;
 
   box-shadow:0 1px 4px rgba(0,0,0,.12);
-
 }
 
 
@@ -118,7 +115,6 @@ body{
 }
 
 .name{
-
   font-size:14px;
 
   font-weight:bold;
@@ -130,14 +126,12 @@ body{
   white-space:nowrap;
 
   text-overflow:ellipsis;
-
 }
 
 
 /* MOBILE NUMBER */
 
 .mobile{
-
   font-size:11px;
 
   color:#777;
@@ -145,14 +139,12 @@ body{
   margin-top:2px;
 
   font-weight:normal;
-
 }
 
 
 /* MARKET */
 
 .market{
-
   text-align:center;
 
   font-size:13px;
@@ -166,14 +158,12 @@ body{
   white-space:nowrap;
 
   text-overflow:ellipsis;
-
 }
 
 
 /* AMOUNT */
 
 .amount{
-
   text-align:right;
 
   font-size:14px;
@@ -181,14 +171,12 @@ body{
   font-weight:bold;
 
   color:green;
-
 }
 
 
 /* LOADING */
 
 .loading{
-
   text-align:center;
 
   padding:15px;
@@ -196,7 +184,6 @@ body{
   font-weight:bold;
 
   color:#555;
-
 }
 
 </style>
@@ -291,7 +278,18 @@ async function loadWinning(){
     document.getElementById("scrollList");
 
 
-  /* GET WINNING */
+  /* SHOW LOADING */
+
+  scrollList.innerHTML = `
+    <div class="loading">
+      Loading...
+    </div>
+  `;
+
+
+  /* =========================
+     GET WINNING
+  ========================= */
 
   const {
     data: winnings,
@@ -312,9 +310,11 @@ async function loadWinning(){
     );
 
 
+  /* WINNING ERROR */
+
   if(winningError){
 
-    console.log(
+    console.error(
       "WINNING ERROR:",
       winningError
     );
@@ -322,7 +322,13 @@ async function loadWinning(){
     scrollList.innerHTML = `
 
       <div class="loading">
-        Winning load nahi hui
+
+        Winning load nahi hui<br><br>
+
+        <small>
+          ${winningError.message || "Unknown error"}
+        </small>
+
       </div>
 
     `;
@@ -331,6 +337,8 @@ async function loadWinning(){
 
   }
 
+
+  /* NO WINNING */
 
   if(
     !winnings ||
@@ -361,12 +369,16 @@ async function loadWinning(){
 
     .from("login")
 
-    .select("id, name, number");
+    .select(
+      "id, name, number"
+    );
 
+
+  /* USER ERROR */
 
   if(userError){
 
-    console.log(
+    console.error(
       "USER ERROR:",
       userError
     );
@@ -374,7 +386,13 @@ async function loadWinning(){
     scrollList.innerHTML = `
 
       <div class="loading">
-        User data load nahi hua
+
+        User data load nahi hua<br><br>
+
+        <small>
+          ${userError.message || "Unknown error"}
+        </small>
+
       </div>
 
     `;
@@ -450,152 +468,10 @@ async function loadWinning(){
       Number(item.amount || 0);
 
 
-
     html += `
 
       <div class="card">
 
 
-        <!-- USER -->
-
-        <div class="userBox">
-
-          <div class="name">
-            ${userName}
-          </div>
-
-          <div class="mobile">
-            ${mobile}
-          </div>
-
-        </div>
-
-
-        <!-- MARKET -->
-
-        <div class="market">
-
-          ${market}
-
-        </div>
-
-
-        <!-- WINNING -->
-
-        <div class="amount">
-
-          ₹ ${amount}
-
-        </div>
-
-
-      </div>
-
-    `;
-
-  });
-
-
-
-  /* Duplicate list */
-
-  scrollList.innerHTML =
-    html + html;
-
-
-  /* Reset position */
-
-  position = 0;
-
-  scrollList.style.transform =
-    "translateY(0px)";
-
-}
-
-
-
-/* =========================
-   AUTO SLIDE
-========================= */
-
-function autoSlide(){
-
-  const list =
-    document.getElementById("list");
-
-
-  const scrollList =
-    document.getElementById("scrollList");
-
-
-  if(!list || !scrollList)
-    return;
-
-
-  if(
-    scrollList.scrollHeight <=
-    list.clientHeight
-  ){
-
-    return;
-
-  }
-
-
-  /* Speed */
-
-  position -= 0.5;
-
-
-  /* Half content complete */
-
-  const halfHeight =
-    scrollList.scrollHeight / 2;
-
-
-  if(
-    Math.abs(position) >=
-    halfHeight
-  ){
-
-    position = 0;
-
-  }
-
-
-  scrollList.style.transform =
-    `translateY(${position}px)`;
-
-}
-
-
-
-/* =========================
-   START
-========================= */
-
-loadWinning();
-
-
-/* Smooth movement */
-
-setInterval(
-  autoSlide,
-  30
-);
-
-
-/* New winning check */
-
-setInterval(
-  loadWinning,
-  30000
-);
-
-
-</script>
-
-
-</body>
-</html>
-```
+        <!--
+        
