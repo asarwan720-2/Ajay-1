@@ -106,16 +106,36 @@ cursor:pointer;
 </div>
 
 <div id="crossing" class="game container">
-<label>1ST NUMBER</label>
-<input id="num1">
-<label>2ND NUMBER</label>
-<input id="num2">
-<label>POINTS</label>
-<input id="points">
-<button onclick="generateCross()">SET</button>
-<div id="crossGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;"></div>
-</div>
 
+<label>1ST NUMBER</label>
+<input 
+  id="num1"
+  type="text"
+  inputmode="numeric"
+  oninput="onlyNumber(this)"
+>
+
+<label>2ND NUMBER</label>
+<input 
+  id="num2"
+  type="text"
+  inputmode="numeric"
+  oninput="onlyNumber(this)"
+>
+
+<label>POINTS</label>
+<input 
+  id="points"
+  type="text"
+  inputmode="numeric"
+  oninput="onlyNumber(this)"
+>
+
+<button onclick="generateCross()">SET</button>
+
+<div id="crossGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px;"></div>
+
+</div>
 <div id="copy" class="game container">
 <label>ENTER DIGIT</label>
 <input
@@ -148,7 +168,9 @@ cursor:pointer;
 </div>
 
 <script>
-
+function onlyNumber(input){
+  input.value = input.value.replace(/[^0-9]/g, '');
+}
 const client = supabase.createClient(
 "https://katbdbzoufiblnnsoxkk.supabase.co",
 "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a"
@@ -194,12 +216,12 @@ document.getElementById(id).classList.add("active");
 
 for(let i=0;i<100;i++){
 let num=i.toString().padStart(2,'0');
-jodiGrid.innerHTML+=`<div class="box">${num}<input oninput="add('${num}',this.value)"></div>`;
+jodiGrid.innerHTML+=`<div class="box">${num}<input type="text" inputmode="numeric" oninput="onlyNumber(this); add('${num}',this.value)"></div>`;
 }
 
 for(let i=0;i<10;i++){
-harufGrid1.innerHTML+=`<div class="box">${i}<input oninput="add('A${i}',this.value)"></div>`;
-harufGrid2.innerHTML+=`<div class="box">${i}<input oninput="add('B${i}',this.value)"></div>`;
+harufGrid1.innerHTML+=`<div class="box">${i}<input type="text" inputmode="numeric" oninput="onlyNumber(this); add('A${i}',this.value)"></div>`;
+harufGrid2.innerHTML+=`<div class="box">${i}<input type="text" inputmode="numeric" oninput="onlyNumber(this); add('B${i}',this.value)"></div>`;
 }
 
 function add(num,val){
