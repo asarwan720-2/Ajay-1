@@ -144,7 +144,8 @@ body{
 
 
 /* =========================
-   MOBILE LAST 4
+   MOBILE
+   ONLY LAST 4 DIGITS
 ========================= */
 
 .mobile{
@@ -285,27 +286,32 @@ let position = 0;
    ONLY LAST 4 DIGITS
 ========================= */
 
-function maskMobile(number){
+function maskMobile(mobile){
 
-  if(!number){
+  if(
+    mobile === null ||
+    mobile === undefined ||
+    mobile === ""
+  ){
 
     return "****";
 
   }
 
-  const mobile =
-    String(number).trim();
+
+  const value =
+    String(mobile).trim();
 
 
-  if(mobile.length <= 4){
+  if(value.length <= 4){
 
-    return mobile;
+    return value;
 
   }
 
 
   return "****" +
-         mobile.slice(-4);
+         value.slice(-4);
 
 }
 
@@ -328,11 +334,8 @@ async function loadWinning(){
   ========================= */
 
   const {
-
     data: winnings,
-
     error: winningError
-
   } = await client
 
     .from("admin wining")
@@ -355,11 +358,10 @@ async function loadWinning(){
 
   if(winningError){
 
-    console.log(
+    console.error(
       "WINNING ERROR:",
       winningError
     );
-
 
     scrollList.innerHTML = `
 
@@ -377,7 +379,7 @@ async function loadWinning(){
 
 
   /* =========================
-     NO DATA
+     NO WINNING DATA
   ========================= */
 
   if(
@@ -403,20 +405,18 @@ async function loadWinning(){
 
   /* =========================
      GET USERS
+     MOBILE = login.mobile
   ========================= */
 
   const {
-
     data: users,
-
     error: userError
-
   } = await client
 
     .from("login")
 
     .select(
-      "id, name, number"
+      "id, name, mobile"
     );
 
 
@@ -426,11 +426,10 @@ async function loadWinning(){
 
   if(userError){
 
-    console.log(
+    console.error(
       "USER ERROR:",
       userError
     );
-
 
     scrollList.innerHTML = `
 
@@ -467,8 +466,8 @@ async function loadWinning(){
           user.name ||
           "User",
 
-        number:
-          user.number ||
+        mobile:
+          user.mobile ||
           ""
 
       };
@@ -480,7 +479,7 @@ async function loadWinning(){
 
 
   /* =========================
-     CREATE HTML
+     CREATE LIST
   ========================= */
 
   let html = "";
@@ -489,7 +488,9 @@ async function loadWinning(){
   winnings.forEach(item => {
 
 
-    /* USER */
+    /* =========================
+       FIND USER
+    ========================= */
 
     const user =
       userMap[
@@ -498,32 +499,40 @@ async function loadWinning(){
 
         name:"User",
 
-        number:""
+        mobile:""
 
       };
 
 
-    /* NAME */
+    /* =========================
+       USER NAME
+    ========================= */
 
     const userName =
       user.name;
 
 
-    /* MOBILE */
+    /* =========================
+       MOBILE LAST 4
+    ========================= */
 
     const mobile =
       maskMobile(
-        user.number
+        user.mobile
       );
 
 
-    /* MARKET */
+    /* =========================
+       MARKET
+    ========================= */
 
     const market =
       item.market || "-";
 
 
-    /* AMOUNT */
+    /* =========================
+       WINNING AMOUNT
+    ========================= */
 
     const amount =
       Number(
@@ -638,7 +647,9 @@ function autoSlide(){
   }
 
 
-  /* CONTENT SMALL */
+  /* =========================
+     CONTENT SMALL
+  ========================= */
 
   if(
     scrollList.scrollHeight <=
@@ -650,18 +661,24 @@ function autoSlide(){
   }
 
 
-  /* SCROLL SPEED */
+  /* =========================
+     SCROLL SPEED
+  ========================= */
 
   position -= 0.5;
 
 
-  /* HALF CONTENT */
+  /* =========================
+     HALF CONTENT
+  ========================= */
 
   const halfHeight =
     scrollList.scrollHeight / 2;
 
 
-  /* RESET */
+  /* =========================
+     RESET
+  ========================= */
 
   if(
     Math.abs(position) >=
@@ -701,7 +718,7 @@ setInterval(
 
 /* =========================
    REFRESH DATA
-   EVERY 30 SEC
+   EVERY 30 SECONDS
 ========================= */
 
 setInterval(
