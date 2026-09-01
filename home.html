@@ -464,11 +464,12 @@ body{
 <div class="main">
 
   <!-- Banner -->
-  <div class="banner">
-    <img
-      src="https://via.placeholder.com/900x300/ffffff/000000?text=POWER+MATKA"
-      alt="Banner">
-  </div>
+ <!-- Banner -->
+<div class="banner" onclick="window.location.href='frem.html'" style="cursor:pointer;">
+  <img
+    src="https://via.placeholder.com/900x300/ffffff/000000?text=POWER+MATKA"
+    alt="Banner">
+</div>
 
   <!-- Slogan -->
   <div class="slogan">
@@ -584,9 +585,11 @@ async function loadWallet(){
 
   if(data){
 
-    document.getElementById("userId").innerText =
-      "💰 ₹" + data.balance;
+  document.getElementById("userId").innerText =
+  "ID: " + user.id;
 
+document.getElementById("wallet").innerHTML =
+  "💰 Wallet";
     document.getElementById("wallet").innerHTML =
       '<span style="font-size:27px;">🎧</span>';
 
