@@ -440,19 +440,39 @@ body{
 
 <div class="topHeader">
 
+  <!-- MENU -->
   <div id="menuBtn" onclick="openMenu()">☰</div>
 
- <div id="userId">
-  ID: Loading...
-</div>
 
-<div id="wallet" onclick="goWallet()">
-  💰 Wallet
-</div>
+  <!-- USER ID -->
+  <div id="userId">
+    ID: Loading...
+  </div>
 
-<div class="helpBox" onclick="window.location.href='frem.html'">
-  <span class="helpIcon">🎧</span>
-  Help
+
+  <!-- WALLET + BALANCE -->
+  <div id="wallet" onclick="goWallet()">
+
+    <span style="font-size:27px;">💰</span>
+
+    <div id="walletInfo">
+      ₹0
+    </div>
+
+  </div>
+
+
+  <!-- ONLY ONE HELP / WHATSAPP -->
+  <div class="helpBox"
+       onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
+
+    <span class="helpIcon">🎧</span>
+
+    Help
+
+  </div>
+
+</div>
 </div>
   </div>
 
@@ -590,8 +610,11 @@ async function loadWallet(){
 
 document.getElementById("wallet").innerHTML =
   "💰 Wallet";
-    document.getElementById("wallet").innerHTML =
-      '<span style="font-size:27px;">🎧</span>';
+    document.getElementById("userId").innerText = 
+  "ID: " + user.id;
+
+document.getElementById("walletInfo").innerText = 
+  "₹" + data.balance;
 
   }
 
