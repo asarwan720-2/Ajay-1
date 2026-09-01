@@ -4,7 +4,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>My Pages</title>
+<title>Winning</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 
@@ -12,47 +14,205 @@
   box-sizing:border-box;
 }
 
-html,body{
+html,
+body{
   margin:0;
   padding:0;
   width:100%;
+  height:100%;
 }
 
 body{
   font-family:Arial,sans-serif;
   background:#f2f2f2;
-  padding:10px;
-  padding-bottom:30px;
-}
-
-/* FRAME BOX */
-
-.frame{
-  width:100%;
-  height:180px;
-  background:#fff;
-  border-radius:15px;
   overflow:hidden;
-  margin-bottom:15px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.15);
 }
 
-/* FRAME */
 
-.frame iframe{
+/* =========================
+   HEADER
+========================= */
+
+.title{
+  height:28px;
+
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+
+  align-items:center;
+
+  background:green;
+  color:white;
+
+  padding:0 10px;
+
+  font-size:12px;
+  font-weight:bold;
+}
+
+.title div:nth-child(2){
+  text-align:center;
+}
+
+.title div:nth-child(3){
+  text-align:right;
+}
+
+
+/* =========================
+   LIST AREA
+========================= */
+
+#list{
+  position:relative;
+
   width:100%;
-  height:100%;
-  border:0;
-  display:block;
+  height:calc(100% - 28px);
+
+  overflow:hidden;
 }
 
-/* MOBILE */
 
-@media(max-width:400px){
+/* =========================
+   SCROLL LIST
+========================= */
 
-  .frame{
-    height:170px;
-  }
+#scrollList{
+  position:absolute;
+
+  left:0;
+  top:0;
+
+  width:100%;
+
+  padding:5px 8px;
+
+  transform:translateY(0);
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+
+  width:100%;
+
+  background:white;
+
+  margin-bottom:6px;
+
+  padding:7px 10px;
+
+  border-radius:9px;
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr 1fr;
+
+  align-items:center;
+
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
+
+}
+
+
+/* =========================
+   USER
+========================= */
+
+.userBox{
+  min-width:0;
+}
+
+.name{
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  color:#222;
+
+  overflow:hidden;
+
+  white-space:nowrap;
+
+  text-overflow:ellipsis;
+
+}
+
+
+/* =========================
+   MOBILE LAST 4
+========================= */
+
+.mobile{
+
+  font-size:11px;
+
+  color:#777;
+
+  margin-top:2px;
+
+  font-weight:normal;
+
+}
+
+
+/* =========================
+   MARKET
+========================= */
+
+.market{
+
+  text-align:center;
+
+  font-size:13px;
+
+  font-weight:bold;
+
+  color:#1e73be;
+
+  overflow:hidden;
+
+  white-space:nowrap;
+
+  text-overflow:ellipsis;
+
+}
+
+
+/* =========================
+   AMOUNT
+========================= */
+
+.amount{
+
+  text-align:right;
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  color:green;
+
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+
+  text-align:center;
+
+  padding:15px;
+
+  font-weight:bold;
+
+  color:#555;
 
 }
 
@@ -60,32 +220,498 @@ body{
 
 </head>
 
+
 <body>
 
-<!-- FRAME 1 -->
-<div class="frame">
-  <iframe src="wallet.html"></iframe>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="title">
+
+  <div>User</div>
+
+  <div>Market</div>
+
+  <div>Winning</div>
+
 </div>
 
-<!-- FRAME 2 -->
-<div class="frame">
-  <iframe src="wallet.html"></iframe>
+
+<!-- =========================
+     LIST
+========================= -->
+
+<div id="list">
+
+  <div id="scrollList">
+
+    <div class="loading">
+      Loading...
+    </div>
+
+  </div>
+
 </div>
 
-<!-- FRAME 3 -->
-<div class="frame">
-  <iframe src="wallet.html"></iframe>
-</div>
 
-<!-- FRAME 4 -->
-<div class="frame">
-  <iframe src="wallet.html"></iframe>
-</div>
 
-<!-- FRAME 5 -->
-<div class="frame">
-  <iframe src="wallet.html"></iframe>
-</div>
+<script>
+
+
+/* =========================
+   SUPABASE
+========================= */
+
+const client = window.supabase.createClient(
+
+  "https://katbdbzoufiblnnsoxkk.supabase.co",
+
+  "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a"
+
+);
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let position = 0;
+
+
+/* =========================
+   MASK MOBILE
+   ONLY LAST 4 DIGITS
+========================= */
+
+function maskMobile(number){
+
+  if(!number){
+
+    return "****";
+
+  }
+
+  const mobile =
+    String(number).trim();
+
+
+  if(mobile.length <= 4){
+
+    return mobile;
+
+  }
+
+
+  return "****" +
+         mobile.slice(-4);
+
+}
+
+
+
+/* =========================
+   LOAD WINNING
+========================= */
+
+async function loadWinning(){
+
+  const scrollList =
+    document.getElementById(
+      "scrollList"
+    );
+
+
+  /* =========================
+     GET WINNING DATA
+  ========================= */
+
+  const {
+
+    data: winnings,
+
+    error: winningError
+
+  } = await client
+
+    .from("admin wining")
+
+    .select(
+      "user_id, market, amount, created_at"
+    )
+
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
+    );
+
+
+  /* =========================
+     WINNING ERROR
+  ========================= */
+
+  if(winningError){
+
+    console.log(
+      "WINNING ERROR:",
+      winningError
+    );
+
+
+    scrollList.innerHTML = `
+
+      <div class="loading">
+
+        Winning load nahi hui
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  /* =========================
+     NO DATA
+  ========================= */
+
+  if(
+    !winnings ||
+    winnings.length === 0
+  ){
+
+    scrollList.innerHTML = `
+
+      <div class="loading">
+
+        No Winning Found
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /* =========================
+     GET USERS
+  ========================= */
+
+  const {
+
+    data: users,
+
+    error: userError
+
+  } = await client
+
+    .from("login")
+
+    .select(
+      "id, name, number"
+    );
+
+
+  /* =========================
+     USER ERROR
+  ========================= */
+
+  if(userError){
+
+    console.log(
+      "USER ERROR:",
+      userError
+    );
+
+
+    scrollList.innerHTML = `
+
+      <div class="loading">
+
+        User data load nahi hua
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+
+  /* =========================
+     USER MAP
+  ========================= */
+
+  const userMap = {};
+
+
+  if(users){
+
+    users.forEach(user => {
+
+      userMap[
+        String(user.id)
+      ] = {
+
+        name:
+          user.name ||
+          "User",
+
+        number:
+          user.number ||
+          ""
+
+      };
+
+    });
+
+  }
+
+
+
+  /* =========================
+     CREATE HTML
+  ========================= */
+
+  let html = "";
+
+
+  winnings.forEach(item => {
+
+
+    /* USER */
+
+    const user =
+      userMap[
+        String(item.user_id)
+      ] || {
+
+        name:"User",
+
+        number:""
+
+      };
+
+
+    /* NAME */
+
+    const userName =
+      user.name;
+
+
+    /* MOBILE */
+
+    const mobile =
+      maskMobile(
+        user.number
+      );
+
+
+    /* MARKET */
+
+    const market =
+      item.market || "-";
+
+
+    /* AMOUNT */
+
+    const amount =
+      Number(
+        item.amount || 0
+      );
+
+
+
+    /* =========================
+       CARD
+    ========================= */
+
+    html += `
+
+      <div class="card">
+
+
+        <!-- USER -->
+
+        <div class="userBox">
+
+          <div class="name">
+
+            ${userName}
+
+          </div>
+
+
+          <div class="mobile">
+
+            ${mobile}
+
+          </div>
+
+        </div>
+
+
+
+        <!-- MARKET -->
+
+        <div class="market">
+
+          ${market}
+
+        </div>
+
+
+
+        <!-- WINNING -->
+
+        <div class="amount">
+
+          ₹ ${amount}
+
+        </div>
+
+
+      </div>
+
+    `;
+
+  });
+
+
+
+  /* =========================
+     DUPLICATE FOR SCROLL
+  ========================= */
+
+  scrollList.innerHTML =
+    html + html;
+
+
+  /* =========================
+     RESET POSITION
+  ========================= */
+
+  position = 0;
+
+  scrollList.style.transform =
+    "translateY(0px)";
+
+}
+
+
+
+/* =========================
+   AUTO SCROLL
+========================= */
+
+function autoSlide(){
+
+  const list =
+    document.getElementById(
+      "list"
+    );
+
+
+  const scrollList =
+    document.getElementById(
+      "scrollList"
+    );
+
+
+  if(
+    !list ||
+    !scrollList
+  ){
+
+    return;
+
+  }
+
+
+  /* CONTENT SMALL */
+
+  if(
+    scrollList.scrollHeight <=
+    list.clientHeight
+  ){
+
+    return;
+
+  }
+
+
+  /* SCROLL SPEED */
+
+  position -= 0.5;
+
+
+  /* HALF CONTENT */
+
+  const halfHeight =
+    scrollList.scrollHeight / 2;
+
+
+  /* RESET */
+
+  if(
+    Math.abs(position) >=
+    halfHeight
+  ){
+
+    position = 0;
+
+  }
+
+
+  scrollList.style.transform =
+    `translateY(${position}px)`;
+
+}
+
+
+
+/* =========================
+   FIRST LOAD
+========================= */
+
+loadWinning();
+
+
+
+/* =========================
+   SMOOTH SCROLL
+========================= */
+
+setInterval(
+  autoSlide,
+  30
+);
+
+
+
+/* =========================
+   REFRESH DATA
+   EVERY 30 SEC
+========================= */
+
+setInterval(
+  loadWinning,
+  30000
+);
+
+
+</script>
+
 
 </body>
 </html>
