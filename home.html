@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
-<meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Home</title>
+
+<title>Winning</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -13,1148 +14,718 @@
   box-sizing:border-box;
 }
 
+html,
 body{
   margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f5f5;
-  color:#222;
-  padding-bottom:85px;
-}
-
-/* ================= TOP HEADER ================= */
-
-.topHeader{
-  height:188px;
-  background:#d9a92f;
-  position:relative;
-  padding-top:1px;
-}
-
-/* Menu */
-
-#menuBtn{
-  position:absolute;
-  left:28px;
-  top:104px;
-  color:white;
-  font-size:42px;
-  line-height:35px;
-  z-index:999;
-  cursor:pointer;
-  font-weight:300;
-}
-
-/* User ID */
-
-#userId{
-  position:absolute;
-  left:32px;
-  top:73px;
-  background:white;
-  color:#222;
-  min-width:120px;
-  max-width:150px;
-  text-align:center;
-  padding:14px 12px;
-  border-radius:35px;
-  font-size:16px;
-  font-weight:bold;
-  z-index:999;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
-
-/* Wallet Amount */
-
-#wallet{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  top:73px;
-  background:white;
-  color:#222;
-  min-width:140px;
-  text-align:center;
-  padding:14px 18px;
-  border-radius:35px;
-  font-size:20px;
-  font-weight:bold;
-  z-index:999;
-  cursor:pointer;
-}
-
-/* Help */
-
-.helpBox{
-  position:absolute;
-  right:25px;
-  top:116px;
-  color:white;
-  text-align:center;
-  font-size:19px;
-  font-weight:bold;
-  cursor:pointer;
-  z-index:999;
-}
-
-.helpIcon{
-  font-size:31px;
-  display:block;
-  margin-bottom:1px;
-}
-
-
-/* ================= MAIN ================= */
-
-.main{
-  padding:18px 14px 0;
-}
-
-
-/* ================= BANNER ================= */
-
-.banner{
-  width:100%;
-  height:238px;
-  border:4px solid #111;
-  border-radius:8px;
-  overflow:hidden;
-  background:#fff;
-  margin-bottom:25px;
-}
-
-.banner iframe{
+  padding:0;
   width:100%;
   height:100%;
-  border:0;
-  display:block;
 }
 
-
-/* ================= SLOGAN ================= */
-
-.slogan{
-  text-align:center;
-  font-size:24px;
-  font-weight:bold;
-  color:#e52b23;
-  margin:8px 0 24px;
-}
-
-.slogan span{
-  color:#d7a928;
-}
-
-
-/* ================= ACTION BUTTONS ================= */
-
-.actionBar{
-  display:flex;
-  justify-content:space-around;
-  align-items:flex-start;
-  padding:0 5px 20px;
-  gap:8px;
-}
-
-.actionBtn{
-  width:25%;
-  background:transparent;
-  border:0;
-  color:#222;
-  text-align:center;
-  font-weight:bold;
-  cursor:pointer;
-  padding:0;
-}
-
-.actionIcon{
-  width:70px;
-  height:70px;
-  margin:auto;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:45px;
-  background:#fff;
-}
-
-.actionText{
-  margin-top:8px;
-  font-size:17px;
-  white-space:nowrap;
-}
-
-
-/* ================= GAME BOX ================= */
-
-.container{
-  display:block;
-  width:100%;
-  padding:0;
-}
-
-.btn{
-  width:100%;
-  background:#11151e;
-  border-radius:25px;
-  padding:28px 25px 22px;
-  margin-bottom:18px;
-  text-align:center;
-  color:white;
-  box-shadow:0 5px 12px rgba(0,0,0,.18);
-  border:none;
+body{
+  font-family:Arial,sans-serif;
+  background:#f2f2f2;
   overflow:hidden;
 }
 
-.gameTop{
-  display:flex;
-  justify-content:space-between;
+
+/* =========================
+   HEADER
+========================= */
+
+.title{
+  height:28px;
+
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+
   align-items:center;
-  margin-bottom:22px;
-}
 
-.gameTimeLabel{
-  color:#cfcfcf;
-  font-size:18px;
-}
-
-.gameTimeLabel span{
-  color:#e0b52f;
-  font-weight:bold;
-}
-
-.gameName{
-  background:linear-gradient(90deg,#111,#222,#111);
-  border:1px solid #303030;
-  border-radius:35px;
-  padding:14px 10px;
-  font-size:21px;
-  font-weight:bold;
+  background:green;
   color:white;
-  margin-bottom:22px;
-}
 
-.gameNumberRow{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:25px;
-}
+  padding:0 10px;
 
-.numberBox{
-  width:126px;
-  height:116px;
-  background:#171c26;
-  border:1px solid #292e38;
-  border-radius:22px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-
-.gameNumber{
-  font-size:34px;
-  color:#f0cf55;
+  font-size:12px;
   font-weight:bold;
 }
 
-.numberLabel{
-  font-size:16px;
-  color:#aaa;
-  margin-top:6px;
-}
-
-.arrow{
-  font-size:35px;
-  color:#777;
-}
-
-.statusBox{
-  width:100%;
-  margin-top:25px;
-  padding:18px;
-  border-radius:20px;
-  background:linear-gradient(90deg,#ffe48a,#a97d17);
-  color:#111;
-  font-size:23px;
-  font-weight:bold;
-}
-
-
-/* ================= WHATSAPP ================= */
-
-.whatsapp{
-  position:fixed;
-  right:18px;
-  bottom:95px;
-  width:58px;
-  height:58px;
-  background:#25D366;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:white;
-  font-size:30px;
-  text-decoration:none;
-  z-index:500;
-  box-shadow:0 3px 8px rgba(0,0,0,.25);
-}
-
-
-/* ================= BOTTOM NAV ================= */
-
-#bottomNav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  height:82px;
-  background:#0b0b0b;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  z-index:1000;
-  padding:5px 3px;
-}
-
-.navBtn{
-  width:19%;
-  height:70px;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  border-radius:20px;
-  cursor:pointer;
-  font-size:14px;
+.title div:nth-child(2){
   text-align:center;
 }
 
-.navIcon{
-  font-size:29px;
-  margin-bottom:5px;
-}
-
-.navText{
-  font-size:15px;
-}
-
-.navBtn.active{
-  background:#171717;
-  box-shadow:0 0 18px rgba(220,170,45,.45);
-  color:white;
+.title div:nth-child(3){
+  text-align:right;
 }
 
 
-/* ================= MOBILE ================= */
+/* =========================
+   LIST AREA
+========================= */
 
-@media(max-width:420px){
+#list{
+  position:relative;
 
-  .topHeader{
-    height:188px;
-  }
+  width:100%;
+  height:calc(100% - 28px);
 
-  #menuBtn{
-    left:28px;
-    top:108px;
-    font-size:39px;
-  }
-
-  #userId{
-    left:35px;
-    top:73px;
-    min-width:110px;
-    max-width:125px;
-    padding:14px 10px;
-    font-size:15px;
-  }
-
-  #wallet{
-    left:50%;
-    transform:translateX(-50%);
-    top:73px;
-    min-width:130px;
-    padding:14px 15px;
-    font-size:18px;
-  }
-
-  .helpBox{
-    right:20px;
-    top:118px;
-    font-size:17px;
-  }
-
-  .helpIcon{
-    font-size:29px;
-  }
-
-  .banner{
-    height:238px;
-  }
-
-  .slogan{
-    font-size:23px;
-  }
-
-  .actionIcon{
-    width:65px;
-    height:65px;
-    font-size:41px;
-  }
-
-  .actionText{
-    font-size:16px;
-  }
-
-  .btn{
-    padding:27px 24px 21px;
-  }
-
-  .gameTimeLabel{
-    font-size:17px;
-  }
-
-  .gameName{
-    font-size:21px;
-  }
-
-  .numberBox{
-    width:126px;
-    height:115px;
-  }
+  overflow:hidden;
 }
 
 
-/* ================= SMALL PHONES ================= */
+/* =========================
+   SCROLL LIST
+========================= */
 
-@media(max-width:360px){
+#scrollList{
+  position:absolute;
 
-  #userId{
-    left:10px;
-    min-width:95px;
-    max-width:105px;
-    font-size:13px;
-    padding:13px 8px;
-  }
+  left:0;
+  top:0;
 
-  #wallet{
-    min-width:115px;
-    font-size:16px;
-    padding:13px 10px;
-  }
+  width:100%;
 
-  .helpBox{
-    right:10px;
-    font-size:15px;
-  }
+  padding:5px 8px;
 
-  .helpIcon{
-    font-size:27px;
-  }
+  transform:translateY(0);
+}
 
-  .banner{
-    height:205px;
-  }
 
-  .slogan{
-    font-size:19px;
-  }
+/* =========================
+   CARD
+========================= */
 
-  .actionIcon{
-    width:57px;
-    height:57px;
-    font-size:36px;
-  }
+.card{
 
-  .actionText{
-    font-size:13px;
-  }
+  width:100%;
 
-  .numberBox{
-    width:110px;
-    height:105px;
-  }
+  background:white;
 
-  .gameNumber{
-    font-size:30px;
-  }
+  margin-bottom:6px;
+
+  padding:7px 10px;
+
+  border-radius:9px;
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr 1fr;
+
+  align-items:center;
+
+  box-shadow:0 1px 4px rgba(0,0,0,.12);
 
 }
-#userId{
-  left:145px !important;
+
+
+/* =========================
+   USER
+========================= */
+
+.userBox{
+  min-width:0;
 }
+
+.name{
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  color:#222;
+
+  overflow:hidden;
+
+  white-space:nowrap;
+
+  text-overflow:ellipsis;
+
+}
+
+
+/* =========================
+   MOBILE
+   ONLY LAST 4 DIGITS
+========================= */
+
+.mobile{
+
+  font-size:11px;
+
+  color:#777;
+
+  margin-top:2px;
+
+  font-weight:normal;
+
+}
+
+
+/* =========================
+   MARKET
+========================= */
+
+.market{
+
+  text-align:center;
+
+  font-size:13px;
+
+  font-weight:bold;
+
+  color:#1e73be;
+
+  overflow:hidden;
+
+  white-space:nowrap;
+
+  text-overflow:ellipsis;
+
+}
+
+
+/* =========================
+   AMOUNT
+========================= */
+
+.amount{
+
+  text-align:right;
+
+  font-size:14px;
+
+  font-weight:bold;
+
+  color:green;
+
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.loading{
+
+  text-align:center;
+
+  padding:15px;
+
+  font-weight:bold;
+
+  color:#555;
+
+}
+
 </style>
+
 </head>
 
 
 <body>
 
 
-<!-- ================= TOP HEADER ================= -->
+<!-- =========================
+     HEADER
+========================= -->
 
-<div class="topHeader">
+<div class="title">
 
-  <!-- MENU -->
-  <div id="menuBtn" onclick="openMenu()">☰</div>
+  <div>User</div>
 
+  <div>Market</div>
 
-  <!-- USER ID -->
-  <div id="userId">
-    ID: Loading...
-  </div>
+  <div>Winning</div>
 
-
-  <!-- WALLET AMOUNT -->
-  <div id="wallet" onclick="goWallet()">
-    💰 ₹0
-  </div>
+</div>
 
 
-  <!-- ONLY ONE HELP -->
-  <div
-    class="helpBox"
-    onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
+<!-- =========================
+     LIST
+========================= -->
 
-    <span class="helpIcon">🎧</span>
-    Help
+<div id="list">
+
+  <div id="scrollList">
+
+    <div class="loading">
+      Loading...
+    </div>
 
   </div>
 
 </div>
 
-
-
-<!-- ================= MAIN ================= -->
-
-<div class="main">
-
-
-  <!-- ================= BANNER ================= -->
-
-  <div class="banner">
-
-    <iframe
-      src="frem.html"
-      title="Frem">
-    </iframe>
-
-  </div>
-
-
-  <!-- ================= SLOGAN ================= -->
-
-  <div class="slogan">
-
-    किस्मत आपका इंतज़ार कर रही है!
-
-    <span>🍀💵🛡️</span>
-
-    सुरक्षित
-
-  </div>
-
-
-
-  <!-- ================= ACTION ================= -->
-
-  <div class="actionBar">
-
-
-    <div
-      class="actionBtn add"
-      onclick="go('deposit.html')">
-
-      <div class="actionIcon">
-        👛
-      </div>
-
-      <div class="actionText">
-        पैसा डालो
-      </div>
-
-    </div>
-
-
-
-    <div
-      class="actionBtn withdraw"
-      onclick="go('withdraw.html')">
-
-      <div class="actionIcon">
-        💰
-      </div>
-
-      <div class="actionText">
-        पैसा निकालो
-      </div>
-
-    </div>
-
-
-
-    <div
-      class="actionBtn"
-      onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
-
-      <div class="actionIcon">
-        🟢
-      </div>
-
-      <div class="actionText">
-        WhatsApp
-      </div>
-
-    </div>
-
-
-
-    <div
-      class="actionBtn"
-      onclick="shareApp()">
-
-      <div class="actionIcon">
-        ➤
-      </div>
-
-      <div class="actionText">
-        Telegram
-      </div>
-
-    </div>
-
-
-  </div>
-
-
-
-  <!-- ================= GAME LIST ================= -->
-
-  <div
-    class="container"
-    id="container">
-  </div>
-
-
-</div>
-
-
-
-<!-- ================= WHATSAPP ================= -->
-
-<a
-  class="whatsapp"
-  href="https://api.whatsapp.com/send?phone=919053922906"
-  target="_blank">
-
-  💬
-
-</a>
-
-
-
-<!-- ================= BOTTOM NAV ================= -->
-
-<div id="bottomNav">
-
-
-  <div class="navBtn">
-
-    <div class="navIcon">
-      ♛
-    </div>
-
-    <div class="navText">
-      Results
-    </div>
-
-  </div>
-
-
-
-  <div class="navBtn">
-
-    <div class="navIcon">
-      ◷
-    </div>
-
-    <div class="navText">
-      History
-    </div>
-
-  </div>
-
-
-
-  <div class="navBtn active">
-
-    <div class="navIcon">
-      🎮
-    </div>
-
-    <div class="navText">
-      Home
-    </div>
-
-  </div>
-
-
-
-  <div class="navBtn">
-
-    <div class="navIcon">
-      ◔
-    </div>
-
-    <div class="navText">
-      Chart
-    </div>
-
-  </div>
-
-
-
-  <div class="navBtn">
-
-    <div class="navIcon">
-      ▷
-    </div>
-
-    <div class="navText">
-      Share
-    </div>
-
-  </div>
-
-
-</div>
-
-
-
-<script src="menu.js"></script>
 
 
 <script>
 
-/* ================= USER ================= */
 
-const user =
-  JSON.parse(localStorage.getItem("user"));
+/* =========================
+   SUPABASE
+========================= */
 
-if(!user){
+const client = window.supabase.createClient(
 
-  window.location.href =
-    "index.html";
+  "https://katbdbzoufiblnnsoxkk.supabase.co",
 
-}
+  "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a"
 
-
-
-/* ================= SUPABASE ================= */
-
-const client =
-  supabase.createClient(
-
-    "https://katbdbzoufiblnnsoxkk.supabase.co",
-
-    "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a"
-
-  );
+);
 
 
+/* =========================
+   VARIABLES
+========================= */
 
-/* ================= WALLET ================= */
-
-async function loadWallet(){
-
-  const { data } = await client
-
-    .from("login")
-
-    .select("balance")
-
-    .eq("id", user.id)
-
-    .single();
+let position = 0;
 
 
-  if(data){
+/* =========================
+   MASK MOBILE
+   ONLY LAST 4 DIGITS
+========================= */
 
-    /* USER ID */
+function maskMobile(mobile){
 
-    document.getElementById("userId").innerText =
-      "ID: " + user.id;
+  if(
+    mobile === null ||
+    mobile === undefined ||
+    mobile === ""
+  ){
 
-
-    /* ACTUAL BALANCE */
-
-    document.getElementById("wallet").innerText =
-      "💰 ₹" + data.balance;
+    return "****";
 
   }
 
+
+  const value =
+    String(mobile).trim();
+
+
+  if(value.length <= 4){
+
+    return value;
+
+  }
+
+
+  return "****" +
+         value.slice(-4);
+
 }
 
 
 
-/* ================= GAME STATUS ================= */
+/* =========================
+   LOAD WINNING
+========================= */
 
-function checkStatus(openTime, closeTime){
+async function loadWinning(){
 
-  if(!openTime || !closeTime)
-    return false;
-
-
-  let now =
-    new Date();
-
-
-  const [oh, om] =
-    openTime.split(":");
-
-
-  const [ch, cm] =
-    closeTime.split(":");
-
-
-  let open =
-    new Date();
-
-  open.setHours(
-    oh,
-    om,
-    0
-  );
-
-
-  let close =
-    new Date();
-
-  close.setHours(
-    ch,
-    cm,
-    0
-  );
-
-
-  if(close < open){
-
-    close.setDate(
-      close.getDate() + 1
+  const scrollList =
+    document.getElementById(
+      "scrollList"
     );
 
 
-    if(now < open){
+  /* =========================
+     GET WINNING DATA
+  ========================= */
 
-      now.setDate(
-        now.getDate() + 1
-      );
+  const {
+    data: winnings,
+    error: winningError
+  } = await client
 
-    }
-
-  }
-
-
-  return (
-    now >= open &&
-    now <= close
-  );
-
-}
-
-
-
-/* ================= LOAD GAMES ================= */
-
-async function loadButtons(){
-
-  let { data } = await client
-
-    .from("Game result")
+    .from("admin wining")
 
     .select(
-      "name, number, open, close"
+      "user_id, market, amount, created_at"
+    )
+
+    .order(
+      "created_at",
+      {
+        ascending:false
+      }
     );
 
 
-  if(!data)
-    return;
+  /* =========================
+     WINNING ERROR
+  ========================= */
 
+  if(winningError){
 
-  data.sort((a,b)=>{
-
-    return (
-
-      checkStatus(
-        b.open,
-        b.close
-      )
-
-      -
-
-      checkStatus(
-        a.open,
-        a.close
-      )
-
+    console.error(
+      "WINNING ERROR:",
+      winningError
     );
 
-  });
+    scrollList.innerHTML = `
 
+      <div class="loading">
 
-
-  let container =
-    document.getElementById(
-      "container"
-    );
-
-
-  container.innerHTML = "";
-
-
-
-  data.forEach(item => {
-
-
-    let isOpen =
-      checkStatus(
-        item.open,
-        item.close
-      );
-
-
-
-    let btn =
-      document.createElement(
-        "div"
-      );
-
-
-    btn.className =
-      "btn";
-
-
-
-    btn.innerHTML = `
-
-      <div class="gameTop">
-
-        <div class="gameTimeLabel">
-
-          OPEN:
-
-          <span>
-            ${item.open}
-          </span>
-
-        </div>
-
-
-        <div class="gameTimeLabel">
-
-          CLOSE:
-
-          <span>
-            ${item.close}
-          </span>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="gameName">
-
-        ${item.name}
-
-        ${isOpen ? " 🔥" : ""}
-
-      </div>
-
-
-
-      <div class="gameNumberRow">
-
-
-        <div class="numberBox">
-
-          <div class="gameNumber">
-
-            ${item.number || "**"}
-
-          </div>
-
-          <div class="numberLabel">
-
-            कल
-
-          </div>
-
-        </div>
-
-
-
-        <div class="arrow">
-
-          ›
-
-        </div>
-
-
-
-        <div class="numberBox">
-
-          <div class="gameNumber">
-
-            XX
-
-          </div>
-
-          <div class="numberLabel">
-
-            आज
-
-          </div>
-
-        </div>
-
-
-      </div>
-
-
-
-      <div class="statusBox">
-
-        ${
-          isOpen
-          ? "खेलें"
-          : "बंद"
-        }
+        Winning load nahi hui
 
       </div>
 
     `;
 
+    return;
+
+  }
 
 
-    if(isOpen){
+  /* =========================
+     NO WINNING DATA
+  ========================= */
 
-      btn.onclick = () => {
+  if(
+    !winnings ||
+    winnings.length === 0
+  ){
 
-        localStorage.setItem(
-          "market",
-          item.name
-        );
+    scrollList.innerHTML = `
 
+      <div class="loading">
 
-        window.location.href =
-          "game.html";
+        No Winning Found
 
-      };
+      </div>
 
-    }
+    `;
 
-    else{
+    return;
 
-      btn.style.opacity =
-        "0.72";
-
-    }
-
+  }
 
 
-    container.appendChild(
-      btn
+
+  /* =========================
+     GET USERS
+     MOBILE = login.mobile
+  ========================= */
+
+  const {
+    data: users,
+    error: userError
+  } = await client
+
+    .from("login")
+
+    .select(
+      "id, name, mobile"
     );
 
-  });
 
-}
+  /* =========================
+     USER ERROR
+  ========================= */
+
+  if(userError){
+
+    console.error(
+      "USER ERROR:",
+      userError
+    );
+
+    scrollList.innerHTML = `
+
+      <div class="loading">
+
+        User data load nahi hua
+
+      </div>
+
+    `;
+
+    return;
+
+  }
 
 
 
-/* ================= NAVIGATION ================= */
+  /* =========================
+     USER MAP
+  ========================= */
 
-function go(page){
-
-  window.location.href =
-    page;
-
-}
+  const userMap = {};
 
 
+  if(users){
 
-/* ================= SHARE ================= */
+    users.forEach(user => {
 
-function shareApp(){
+      userMap[
+        String(user.id)
+      ] = {
 
-  if(navigator.share){
+        name:
+          user.name ||
+          "User",
 
-    navigator.share({
+        mobile:
+          user.mobile ||
+          ""
 
-      title:"My App",
-
-      text:"Join now",
-
-      url:window.location.href
+      };
 
     });
 
   }
 
+
+
+  /* =========================
+     CREATE LIST
+  ========================= */
+
+  let html = "";
+
+
+  winnings.forEach(item => {
+
+
+    /* =========================
+       FIND USER
+    ========================= */
+
+    const user =
+      userMap[
+        String(item.user_id)
+      ] || {
+
+        name:"User",
+
+        mobile:""
+
+      };
+
+
+    /* =========================
+       USER NAME
+    ========================= */
+
+    const userName =
+      user.name;
+
+
+    /* =========================
+       MOBILE LAST 4
+    ========================= */
+
+    const mobile =
+      maskMobile(
+        user.mobile
+      );
+
+
+    /* =========================
+       MARKET
+    ========================= */
+
+    const market =
+      item.market || "-";
+
+
+    /* =========================
+       WINNING AMOUNT
+    ========================= */
+
+    const amount =
+      Number(
+        item.amount || 0
+      );
+
+
+
+    /* =========================
+       CARD
+    ========================= */
+
+    html += `
+
+      <div class="card">
+
+
+        <!-- USER -->
+
+        <div class="userBox">
+
+          <div class="name">
+
+            ${userName}
+
+          </div>
+
+
+          <div class="mobile">
+
+            ${mobile}
+
+          </div>
+
+        </div>
+
+
+
+        <!-- MARKET -->
+
+        <div class="market">
+
+          ${market}
+
+        </div>
+
+
+
+        <!-- WINNING -->
+
+        <div class="amount">
+
+          ₹ ${amount}
+
+        </div>
+
+
+      </div>
+
+    `;
+
+  });
+
+
+
+  /* =========================
+     DUPLICATE FOR SCROLL
+  ========================= */
+
+  scrollList.innerHTML =
+    html + html;
+
+
+  /* =========================
+     RESET POSITION
+  ========================= */
+
+  position = 0;
+
+  scrollList.style.transform =
+    "translateY(0px)";
+
 }
 
 
 
-/* ================= WALLET PAGE ================= */
+/* =========================
+   AUTO SCROLL
+========================= */
 
-function goWallet(){
+function autoSlide(){
 
-  window.location.href =
-    "wallet.html";
+  const list =
+    document.getElementById(
+      "list"
+    );
+
+
+  const scrollList =
+    document.getElementById(
+      "scrollList"
+    );
+
+
+  if(
+    !list ||
+    !scrollList
+  ){
+
+    return;
+
+  }
+
+
+  /* =========================
+     CONTENT SMALL
+  ========================= */
+
+  if(
+    scrollList.scrollHeight <=
+    list.clientHeight
+  ){
+
+    return;
+
+  }
+
+
+  /* =========================
+     SCROLL SPEED
+  ========================= */
+
+  position -= 0.5;
+
+
+  /* =========================
+     HALF CONTENT
+  ========================= */
+
+  const halfHeight =
+    scrollList.scrollHeight / 2;
+
+
+  /* =========================
+     RESET
+  ========================= */
+
+  if(
+    Math.abs(position) >=
+    halfHeight
+  ){
+
+    position = 0;
+
+  }
+
+
+  scrollList.style.transform =
+    `translateY(${position}px)`;
 
 }
 
 
 
-/* ================= LOGOUT ================= */
+/* =========================
+   FIRST LOAD
+========================= */
 
-function logout(){
-
-  localStorage.removeItem(
-    "user"
-  );
-
-
-  window.location.href =
-    "index.html";
-
-}
+loadWinning();
 
 
 
-/* ================= START ================= */
+/* =========================
+   SMOOTH SCROLL
+========================= */
 
-loadWallet();
+setInterval(
+  autoSlide,
+  30
+);
 
-loadButtons();
 
 
+/* =========================
+   REFRESH DATA
+   EVERY 30 SECONDS
+========================= */
 
-/* ================= AUTO REFRESH ================= */
+setInterval(
+  loadWinning,
+  30000
+);
 
-setInterval(()=>{
-
-  loadButtons();
-
-  loadWallet();
-
-},60000);
 
 </script>
 
