@@ -43,20 +43,18 @@ body{
 
 #userId{
   position:absolute;
-  left:50%;
-  transform:translateX(-50%);
+  left:22px;
   top:73px;
   background:white;
   color:#222;
-  min-width:238px;
+  min-width:120px;
   text-align:center;
-  padding:14px 25px;
+  padding:14px 15px;
   border-radius:35px;
-  font-size:27px;
+  font-size:18px;
   font-weight:bold;
   z-index:999;
 }
-
 /* Wallet */
 #wallet{
   position:absolute;
@@ -342,12 +340,14 @@ body{
     font-size:39px;
   }
 
-  #userId{
+   #userId{
+    left:22px;
+    transform:none;
     top:73px;
-    min-width:238px;
-    font-size:26px;
+    min-width:120px;
+    font-size:18px;
+    padding:14px 15px;
   }
-
   #wallet{
     right:25px;
     top:74px;
@@ -444,31 +444,28 @@ body{
   <div id="menuBtn" onclick="openMenu()">☰</div>
 
 
-  <!-- USER ID -->
+  <!-- USER ID - LEFT -->
   <div id="userId">
     ID: Loading...
   </div>
 
 
-  <!-- WALLET + BALANCE -->
-  <div id="wallet" onclick="goWallet()">
-
-    <span style="font-size:27px;">💰</span>
-
-    <div id="walletInfo">
-      ₹0
-    </div>
-
+  <!-- WALLET AMOUNT - CENTER -->
+  <div id="wallet">
+    💰 ₹0
   </div>
 
 
-  <!-- ONLY ONE HELP / WHATSAPP -->
+  <!-- HELP / WHATSAPP - RIGHT -->
   <div class="helpBox"
        onclick="window.open('https://api.whatsapp.com/send?phone=919053922906','_blank')">
 
     <span class="helpIcon">🎧</span>
-
     Help
+
+  </div>
+
+</div>
 
   </div>
 
