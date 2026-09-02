@@ -1394,13 +1394,8 @@ async function loadButtons(){
 
     }
 
-
-    /* =========================
-       SORT
-    ========================= */
-
-  /* =========================
-   SORT BY CURRENT TIME
+/* =========================
+   SORT
 ========================= */
 
 data.sort((a, b) => {
@@ -1408,59 +1403,23 @@ data.sort((a, b) => {
   const aOpen = checkStatus(a.open, a.close);
   const bOpen = checkStatus(b.open, b.close);
 
-  // Jo market abhi chal raha hai → upar
-  if (aOpen && !bOpen) {
-    return -1;
-  }
+  if (aOpen && !bOpen) return -1;
 
-  if (!aOpen && bOpen) {
-    return 1;
-  }
+  if (!aOpen && bOpen) return 1;
 
-  // Dono market chal rahe hain
-  // jiska CLOSE pehle hai → woh pehle
-  if (aOpen && bOpen) {
-
-    const aTime = a.close.split(":").map(Number);
-    const bTime = b.close.split(":").map(Number);
-
-    const aMinutes =
-      aTime[0] * 60 + aTime[1];
-
-    const bMinutes =
-      bTime[0] * 60 + bTime[1];
-
-    return aMinutes - bMinutes;
-  }
-
-  // Dono band hain → original order
   return 0;
 
 });
-});
-          )
-
-          -
-
-          checkStatus(
-            a.open,
-            a.close
-          )
-
-        );
-
-      }
-    );
 
 
-    container.innerHTML = "";
+container.innerHTML = "";
 
 
-    /* =========================
-       CREATE CARDS
-    ========================= */
+/* =========================
+   CREATE CARDS
+========================= */
 
-    data.forEach(item=>{
+data.forEach(item=>{
 
 
       const isOpen =
