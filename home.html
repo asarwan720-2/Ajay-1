@@ -1399,14 +1399,30 @@ async function loadButtons(){
        SORT
     ========================= */
 
-    data.sort(
-      (a,b)=>{
+    data.sort((a, b) => {
 
-        return (
+  const aOpen = checkStatus(a.open, a.close);
+  const bOpen = checkStatus(b.open, b.close);
 
-          checkStatus(
-            b.open,
-            b.close
+  // Jo market abhi chal raha hai, woh upar
+  if (aOpen && !bOpen) return -1;
+  if (!aOpen && bOpen) return 1;
+
+  // Dono chal rahe hain to jiski closing time pehle hai,
+  // woh pehle rahega
+  if (aOpen && bOpen) {
+    const aClose = a.close.split(":").map(Number);
+    const bClose = b.close.split(":").map(Number);
+
+    const aMinutes = aClose[0] * 60 + aClose[1];
+    const bMinutes = bClose[0] * 60 + bClose[1];
+
+    return aMinutes - bMinutes;
+  }
+
+  // Jo market band hain, woh neeche
+  return 0;
+});
           )
 
           -
@@ -1706,6 +1722,10 @@ function getKalResult(marketName) {
 
   return results[marketName] || "**";
 }
+      console.log(
+  "KAL RESULTS:",
+  localStorage.getItem("yesterdayResults")
+);
 </script>
 
 <script src="menu.js"></script>
