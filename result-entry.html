@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Result Entry</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  padding:20px 12px;
+  background:#f3f4f6;
+  font-family:Arial,sans-serif;
+}
+
+.box{
+  width:100%;
+  max-width:500px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.12);
+}
+
+h2{
+  text-align:center;
+  margin:0 0 20px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-top:15px;
+  margin-bottom:7px;
+}
+
+input{
+  width:100%;
+  height:48px;
+  border:1px solid #ccc;
+  border-radius:12px;
+  padding:0 12px;
+  font-size:16px;
+  outline:none;
+}
+
+input:focus{
+  border-color:#d19b19;
+}
+
+.saveBtn{
+  width:100%;
+  height:52px;
+  margin-top:22px;
+  border:0;
+  border-radius:14px;
+  background:#151922;
+  color:white;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.saveBtn:active{
+  transform:scale(.98);
+}
+
+.status{
+  margin-top:15px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.savedList{
+  margin-top:28px;
+}
+
+.savedItem{
+  background:#f3f4f6;
+  padding:14px;
+  border-radius:13px;
+  margin-top:10px;
+}
+
+.market{
+  font-size:17px;
+  font-weight:bold;
+}
+
+.resultRow{
+  margin-top:8px;
+  font-size:14px;
+}
+
+.today{
+  color:#16803c;
+}
+
+.yesterday{
+  color:#b77900;
+}
+
+.deleteBtn{
+  margin-top:10px;
+  border:0;
+  background:#dc2626;
+  color:white;
+  padding:7px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+<h2>🎯 Result Entry</h2>
+
+
+<!-- MARKET -->
+
+<label>
+Market Name
+</label>
+
+<input
+id="marketName"
+type="text"
+placeholder="Market ka naam dalein">
+
+
+<!-- TODAY -->
+
+<label>
+आज का Result
+</label>
+
+<input
+id="todayResult"
+type="text"
+inputmode="numeric"
+maxlength="2"
+placeholder="00 - 99">
+
+
+<!-- YESTERDAY -->
+
+<label>
+कल का Result
+</label>
+
+<input
+id="yesterdayResult"
+type="text"
+inputmode="numeric"
+maxlength="2"
+placeholder="00 - 99">
+
+
+<!-- SAVE -->
+
+<button
+class="saveBtn"
+onclick="saveResult()">
+
+💾 SAVE RESULT
+
+</button>
+
+
+<div
+id="status"
+class="status">
+</div>
+
+
+<!-- LOCAL RESULTS -->
+
+<div class="savedList">
+
+<h3>📋 कल के Local Results</h3>
+
+<div id="list"></div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/* =================================
+   SUPABASE
+================================= */
+
+const client =
+supabase.createClient(
+
+  "https://katbdbzoufiblnnsoxkk.supabase.co",
+
+  "sb_publishable_--fdpQMmSlUyt2ywjUErgQ_LXGvQH-a"
+
+);
+
+
+/* =================================
+   LOCAL STORAGE
+================================= */
+
+function getLocalResults(){
+
+  return JSON.parse(
+
+    localStorage.getItem(
+      "yesterdayResults"
+    ) || "{}"
+
+  );
+
+}
+
+
+/* =================================
+   SAVE RESULT
+================================= */
+
+async function saveResult(){
+
+
+  const market =
+    document
+      .getElementById("marketName")
+      .value
+      .trim();
+
+
+  const today =
+    document
+      .getElementById("todayResult")
+      .value
+      .trim();
+
+
+  const yesterday =
+    document
+      .getElementById("yesterdayResult")
+      .value
+      .trim();
+
+
+  const status =
+    document
+      .getElementById("status");
+
+
+  /* ===============================
+     VALIDATION
+  =============================== */
+
+  if(!market){
+
+    status.innerText =
+      "⚠️ Market ka naam dalein";
+
+    return;
+
+  }
+
+
+  if(!/^[0-9]{1,2}$/.test(today)){
+
+    status.innerText =
+      "⚠️ Aaj ka result 0 se 99 tak hona chahiye";
+
+    return;
+
+  }
+
+
+  if(!/^[0-9]{1,2}$/.test(yesterday)){
+
+    status.innerText =
+      "⚠️ Kal ka result 0 se 99 tak hona chahiye";
+
+    return;
+
+  }
+
+
+  status.innerText =
+    "⏳ Saving...";
+
+
+  /* =================================
+     1. AAJ KA RESULT
+     SUPABASE ME SAVE
+  ================================= */
+
+  const {
+    data,
+    error
+  } = await client
+
+    .from("Game result")
+
+    .update({
+
+      number: today
+
+    })
+
+    .eq("name", market)
+
+    .select();
+
+
+  if(error){
+
+    console.log(
+      "TODAY RESULT ERROR:",
+      error
+    );
+
+    status.innerText =
+      "❌ Aaj ka result Supabase me save nahi hua";
+
+    return;
+
+  }
+
+
+  /* =================================
+     CHECK MARKET
+  ================================= */
+
+  if(!data || data.length === 0){
+
+    status.innerText =
+      "❌ Ye market Supabase me nahi mila";
+
+    return;
+
+  }
+
+
+  /* =================================
+     2. KAL KA RESULT
+     LOCAL STORAGE ME SAVE
+  ================================= */
+
+  const results =
+    getLocalResults();
+
+
+  results[market] =
+    yesterday;
+
+
+  localStorage.setItem(
+
+    "yesterdayResults",
+
+    JSON.stringify(results)
+
+  );
+
+
+  /* =================================
+     SUCCESS
+  ================================= */
+
+  status.innerText =
+    "✅ Aaj Supabase me aur kal Local me save ho gaya";
+
+
+  /* =================================
+     CLEAR INPUT
+  ================================= */
+
+  document
+    .getElementById("marketName")
+    .value = "";
+
+  document
+    .getElementById("todayResult")
+    .value = "";
+
+  document
+    .getElementById("yesterdayResult")
+    .value = "";
+
+
+  showLocalResults();
+
+}
+
+
+/* =================================
+   SHOW LOCAL RESULTS
+================================= */
+
+function showLocalResults(){
+
+
+  const list =
+    document.getElementById("list");
+
+
+  const results =
+    getLocalResults();
+
+
+  list.innerHTML = "";
+
+
+  const markets =
+    Object.keys(results);
+
+
+  if(markets.length === 0){
+
+    list.innerHTML =
+      "<div>Abhi koi kal ka result save nahi hai.</div>";
+
+    return;
+
+  }
+
+
+  markets.forEach(market=>{
+
+
+    const div =
+      document.createElement("div");
+
+
+    div.className =
+      "savedItem";
+
+
+    div.innerHTML = `
+
+      <div class="market">
+
+        ${market}
+
+      </div>
+
+
+      <div class="resultRow yesterday">
+
+        कल का Result:
+        <b>${results[market]}</b>
+
+      </div>
+
+
+      <button
+        class="deleteBtn"
+        onclick="deleteLocalResult('${escapeMarket(market)}')">
+
+        Delete
+
+      </button>
+
+    `;
+
+
+    list.appendChild(div);
+
+
+  });
+
+}
+
+
+/* =================================
+   DELETE LOCAL RESULT
+================================= */
+
+function deleteLocalResult(market){
+
+
+  const results =
+    getLocalResults();
+
+
+  delete results[market];
+
+
+  localStorage.setItem(
+
+    "yesterdayResults",
+
+    JSON.stringify(results)
+
+  );
+
+
+  showLocalResults();
+
+}
+
+
+/* =================================
+   ESCAPE
+================================= */
+
+function escapeMarket(text){
+
+  return text
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
+
+}
+
+
+/* =================================
+   START
+================================= */
+
+showLocalResults();
+
+
+</script>
+
+</body>
+
+</html>
