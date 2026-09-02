@@ -1399,29 +1399,44 @@ async function loadButtons(){
        SORT
     ========================= */
 
-    data.sort((a, b) => {
+  /* =========================
+   SORT BY CURRENT TIME
+========================= */
+
+data.sort((a, b) => {
 
   const aOpen = checkStatus(a.open, a.close);
   const bOpen = checkStatus(b.open, b.close);
 
-  // Jo market abhi chal raha hai, woh upar
-  if (aOpen && !bOpen) return -1;
-  if (!aOpen && bOpen) return 1;
+  // Jo market abhi chal raha hai → upar
+  if (aOpen && !bOpen) {
+    return -1;
+  }
 
-  // Dono chal rahe hain to jiski closing time pehle hai,
-  // woh pehle rahega
+  if (!aOpen && bOpen) {
+    return 1;
+  }
+
+  // Dono market chal rahe hain
+  // jiska CLOSE pehle hai → woh pehle
   if (aOpen && bOpen) {
-    const aClose = a.close.split(":").map(Number);
-    const bClose = b.close.split(":").map(Number);
 
-    const aMinutes = aClose[0] * 60 + aClose[1];
-    const bMinutes = bClose[0] * 60 + bClose[1];
+    const aTime = a.close.split(":").map(Number);
+    const bTime = b.close.split(":").map(Number);
+
+    const aMinutes =
+      aTime[0] * 60 + aTime[1];
+
+    const bMinutes =
+      bTime[0] * 60 + bTime[1];
 
     return aMinutes - bMinutes;
   }
 
-  // Jo market band hain, woh neeche
+  // Dono band hain → original order
   return 0;
+
+});
 });
           )
 
