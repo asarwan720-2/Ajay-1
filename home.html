@@ -1495,7 +1495,7 @@ async function loadButtons(){
 
             <div class="gameNumber">
 
-              ${item.number || "**"}
+             ${item.number || "**"}
 
             </div>
 
@@ -1521,7 +1521,7 @@ async function loadButtons(){
 
             <div class="gameNumber">
 
-              XX
+            ${item.number || "XX"}
 
             </div>
 
@@ -1697,7 +1697,13 @@ setInterval(
   },
   60000
 );
+function getKalResult(marketName) {
+  const results = JSON.parse(
+    localStorage.getItem("yesterdayResults") || "{}"
+  );
 
+  return results[marketName] || "**";
+}
 </script>
 
 <script src="menu.js"></script>
