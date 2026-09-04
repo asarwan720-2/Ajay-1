@@ -287,25 +287,40 @@ body{
 ========================= */
 
 .slogan{
-
   background:white;
-
   border-radius:15px;
-
-  padding:13px 8px;
-
-  text-align:center;
-
+  padding:13px 0;
   font-size:18px;
-
   font-weight:bold;
-
   color:#e52b23;
-
   margin-bottom:17px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
 
-  box-shadow:
-    0 2px 8px rgba(0,0,0,.08);
+  overflow:hidden;
+  white-space:nowrap;
+  position:relative;
+}
+
+.runningTrack{
+  display:flex;
+  width:max-content;
+  animation:runningText 12s linear infinite;
+}
+
+.runningItem{
+  display:inline-block;
+  padding-right:50vw;
+}
+
+@keyframes runningText{
+
+  from{
+    transform:translateX(0);
+  }
+
+  to{
+    transform:translateX(-50%);
+  }
 
 }
 
@@ -1324,70 +1339,7 @@ function checkStatus(
 /* =========================
    LOAD GAMES
 ========================= */
-/* =========================
-   LOCAL RESULT SYSTEM
-========================= */
 
-function getGameDate(){
-
-  const now = new Date();
-
-  // रात 1 बजे से नया दिन शुरू होगा
-  if(now.getHours() < 1){
-    now.setDate(now.getDate() - 1);
-  }
-
-  return now.toISOString().split("T")[0];
-}
-
-
-function getLocalResult(gameName){
-
-  const saved =
-    JSON.parse(
-      localStorage.getItem("gameResults") || "{}"
-    );
-
-  const today =
-    getGameDate();
-
-  if(!saved[gameName]){
-    return "";
-  }
-
-  if(saved[gameName].date !== today){
-
-    delete saved[gameName];
-
-    localStorage.setItem(
-      "gameResults",
-      JSON.stringify(saved)
-    );
-
-    return "";
-  }
-
-  return saved[gameName].result || "";
-}
-
-
-function saveLocalResult(gameName,result){
-
-  const saved =
-    JSON.parse(
-      localStorage.getItem("gameResults") || "{}"
-    );
-
-  saved[gameName] = {
-    result: result,
-    date: getGameDate()
-  };
-
-  localStorage.setItem(
-    "gameResults",
-    JSON.stringify(saved)
-  );
-}
 async function loadButtons(){
 
   const container =
@@ -1457,42 +1409,32 @@ async function loadButtons(){
 
     }
 
+/* =========================
+   SORT
+========================= */
 
-    /* =========================
-       SORT
-    ========================= */
+data.sort((a, b) => {
 
-    data.sort(
-      (a,b)=>{
+  const aOpen = checkStatus(a.open, a.close);
+  const bOpen = checkStatus(b.open, b.close);
 
-        return (
+  if (aOpen && !bOpen) return -1;
 
-          checkStatus(
-            b.open,
-            b.close
-          )
+  if (!aOpen && bOpen) return 1;
 
-          -
+  return 0;
 
-          checkStatus(
-            a.open,
-            a.close
-          )
-
-        );
-
-      }
-    );
+});
 
 
-    container.innerHTML = "";
+container.innerHTML = "";
 
 
-    /* =========================
-       CREATE CARDS
-    ========================= */
+/* =========================
+   CREATE CARDS
+========================= */
 
-    data.forEach(item=>{
+data.forEach(item=>{
 
 
       const isOpen =
@@ -1556,16 +1498,19 @@ async function loadButtons(){
 
           <div class="numberBox">
 
-            <div class="gameNumber">
+  <div class="gameNumber">
 
-             ${getLocalResult(item.name) || "--"}
-            </div>
+    ${getKalResult(item.name)}
 
-            <div class="numberLabel">
+  </div>
 
-              कल
+  <div class="numberLabel">
 
-            </div>
+    कल
+
+  </div>
+
+
 
           </div>
 
@@ -1583,7 +1528,7 @@ async function loadButtons(){
 
             <div class="gameNumber">
 
-              XX
+            ${item.number || "XX"}
 
             </div>
 
@@ -1759,7 +1704,17 @@ setInterval(
   },
   60000
 );
+function getKalResult(marketName) {
+  const results = JSON.parse(
+    localStorage.getItem("yesterdayResults") || "{}"
+  );
 
+  return results[marketName] || "**";
+}
+      console.log(
+  "KAL RESULTS:",
+  localStorage.getItem("yesterdayResults")
+);
 </script>
 
 <script src="menu.js"></script>
