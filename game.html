@@ -2,8 +2,7 @@
 <html>
 <head>
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>All Games</title>
 
@@ -170,9 +169,7 @@ button{
 
 <body>
 
-
 <div id="menuBtn" onclick="openMenu()">⋮</div>
-
 
 <div class="header">
 
@@ -186,73 +183,58 @@ button{
 
 </div>
 
-
 <div class="topBtns">
 
-  <div class="topBtn btn1"
-       onclick="showGame('jodi')">
+  <div class="topBtn btn1" onclick="showGame('jodi')">
     JODI
   </div>
 
-  <div class="topBtn btn2"
-       onclick="showGame('haruf')">
+  <div class="topBtn btn2" onclick="showGame('haruf')">
     HARUF
   </div>
 
-  <div class="topBtn btn3"
-       onclick="showGame('crossing')">
+  <div class="topBtn btn3" onclick="showGame('crossing')">
     CROSSING
   </div>
 
-  <div class="topBtn btn4"
-       onclick="showGame('copy')">
+  <div class="topBtn btn4" onclick="showGame('copy')">
     COPY
   </div>
 
-  <div class="topBtn btn5"
-       onclick="window.location.href='play.html'">
+  <div class="topBtn btn5" onclick="window.location.href='play.html'">
     TYP/IMAGE
   </div>
 
 </div>
 
 
-<!-- ================= JODI ================= -->
+<!-- JODI -->
 
-<div id="jodi"
-     class="game active container">
+<div id="jodi" class="game active container">
 
-  <div class="grid"
-       id="jodiGrid">
-  </div>
+  <div class="grid" id="jodiGrid"></div>
 
 </div>
 
 
-<!-- ================= HARUF ================= -->
+<!-- HARUF -->
 
-<div id="haruf"
-     class="game container">
+<div id="haruf" class="game container">
 
   <h3>Single Andar</h3>
 
-  <div class="grid"
-       id="harufGrid1">
-  </div>
+  <div class="grid" id="harufGrid1"></div>
 
   <h3>Single Bahar</h3>
 
-  <div class="grid"
-       id="harufGrid2">
-  </div>
+  <div class="grid" id="harufGrid2"></div>
 
 </div>
 
 
-<!-- ================= CROSSING ================= -->
+<!-- CROSSING -->
 
-<div id="crossing"
-     class="game container">
+<div id="crossing" class="game container">
 
   <label>1ST NUMBER</label>
 
@@ -263,7 +245,6 @@ button{
     oninput="onlyNumber(this)"
   >
 
-
   <label>2ND NUMBER</label>
 
   <input
@@ -272,7 +253,6 @@ button{
     inputmode="numeric"
     oninput="onlyNumber(this)"
   >
-
 
   <label>POINTS</label>
 
@@ -283,27 +263,25 @@ button{
     oninput="onlyNumber(this)"
   >
 
-
   <button onclick="generateCross()">
     SET
   </button>
 
-
-  <div id="crossGrid"
-       style="
-       display:grid;
-       grid-template-columns:repeat(3,1fr);
-       gap:10px;
-       margin-top:10px;">
+  <div
+    id="crossGrid"
+    style="
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:10px;">
   </div>
 
 </div>
 
 
-<!-- ================= COPY ================= -->
+<!-- COPY -->
 
-<div id="copy"
-     class="game container">
+<div id="copy" class="game container">
 
   <label>ENTER DIGIT</label>
 
@@ -311,13 +289,11 @@ button{
     id="digits"
     type="text"
     inputmode="numeric"
-    pattern="[0-9]*"
     autocomplete="off"
     oninput="
       this.value=this.value.replace(/[^0-9]/g,'')
     "
   >
-
 
   <label>ENTER AMOUNT</label>
 
@@ -330,15 +306,11 @@ button{
     placeholder="Enter amount"
   >
 
-
   <button onclick="generateCopy()">
     ADD
   </button>
 
-
-  <table id="table"
-         border="1"
-         width="100%">
+  <table id="table" border="1" width="100%">
 
     <tr>
       <th>NUMBER</th>
@@ -351,17 +323,15 @@ button{
 </div>
 
 
-<!-- ================= BOTTOM ================= -->
+<!-- BOTTOM -->
 
 <div class="bottom">
 
-  <div class="total"
-       id="total">
+  <div class="total" id="total">
     ₹ 0
   </div>
 
-  <div class="submit"
-       onclick="submitAll()">
+  <div class="submit" onclick="submitAll()">
     SUBMIT
   </div>
 
@@ -369,7 +339,6 @@ button{
 
 
 <script>
-
 
 /* =========================
    ONLY NUMBER
@@ -403,7 +372,6 @@ const client = supabase.createClient(
 const user =
   JSON.parse(localStorage.getItem("user"));
 
-
 if(!user){
 
   document.getElementById("userId")
@@ -420,7 +388,7 @@ if(!user){
 
 
 /* =========================
-   LOAD USER
+   LOAD WALLET
 ========================= */
 
 async function loadUser(){
@@ -429,40 +397,29 @@ async function loadUser(){
     return;
   }
 
+  const {data,error} = await client
 
-  try{
+    .from("login")
+    .select("balance")
+    .eq("id",user.id)
+    .single();
 
-    const {data,error} = await client
-
-      .from("login")
-
-      .select("balance")
-
-      .eq("id",user.id)
-
-      .single();
-
-
-    if(error){
-
-      console.error(error);
-
-      return;
-
-    }
-
-
-    if(data){
-
-      document.getElementById("wallet")
-        .innerText = "₹ " + data.balance;
-
-    }
-
-
-  }catch(error){
+  if(error){
 
     console.error(error);
+
+    document.getElementById("wallet")
+      .innerText = "₹ 0";
+
+    return;
+
+  }
+
+  if(data){
+
+    document.getElementById("wallet")
+      .innerText =
+      "₹ " + (Number(data.balance) || 0);
 
   }
 
@@ -500,13 +457,11 @@ function updateTotal(){
 
   total = 0;
 
-
   dataArr.forEach(item => {
 
     total += Number(item.amount) || 0;
 
   });
-
 
   document.getElementById("total")
     .innerText = "₹ " + total;
@@ -515,7 +470,7 @@ function updateTotal(){
 
 
 /* =========================
-   RESET GAME
+   RESET
 ========================= */
 
 function resetGameData(){
@@ -528,7 +483,6 @@ function resetGameData(){
 
   lastCopyInput = "";
 
-
   document
     .querySelectorAll(".game input")
     .forEach(input => {
@@ -537,22 +491,17 @@ function resetGameData(){
 
     });
 
-
   document.getElementById("crossGrid")
     .innerHTML = "";
 
-
   document.getElementById("table")
     .innerHTML = `
-
       <tr>
         <th>NUMBER</th>
         <th>AMOUNT</th>
         <th>DEL</th>
       </tr>
-
     `;
-
 
   updateTotal();
 
@@ -565,16 +514,7 @@ function resetGameData(){
 
 function showGame(id){
 
-  /*
-    Previous game ka data clear
-  */
-
   resetGameData();
-
-
-  /*
-    Sab games hide
-  */
 
   document
     .querySelectorAll(".game")
@@ -584,14 +524,8 @@ function showGame(id){
 
     });
 
-
-  /*
-    Selected game show
-  */
-
   const selectedGame =
     document.getElementById(id);
-
 
   if(selectedGame){
 
@@ -603,14 +537,13 @@ function showGame(id){
 
 
 /* =========================
-   JODI GRID
+   JODI
 ========================= */
 
 for(let i=0;i<100;i++){
 
   let num =
     i.toString().padStart(2,'0');
-
 
   document.getElementById("jodiGrid")
     .innerHTML += `
@@ -636,7 +569,7 @@ for(let i=0;i<100;i++){
 
 
 /* =========================
-   HARUF GRID
+   HARUF
 ========================= */
 
 for(let i=0;i<10;i++){
@@ -660,7 +593,6 @@ for(let i=0;i<10;i++){
       </div>
 
     `;
-
 
   document.getElementById("harufGrid2")
     .innerHTML += `
@@ -686,19 +618,17 @@ for(let i=0;i<10;i++){
 
 
 /* =========================
-   ADD NUMBER
+   ADD
 ========================= */
 
 function add(num,val){
 
   val = Number(val) || 0;
 
-
   dataArr =
     dataArr.filter(item =>
       item.number !== num
     );
-
 
   if(val > 0){
 
@@ -711,7 +641,6 @@ function add(num,val){
     });
 
   }
-
 
   updateTotal();
 
@@ -728,17 +657,14 @@ function generateCross(){
     document.getElementById("num1")
       .value.trim();
 
-
   let n2 =
     document.getElementById("num2")
       .value.trim();
-
 
   let a =
     Number(
       document.getElementById("points").value
     );
-
 
   if(!n1 || !n2 || a <= 0){
 
@@ -748,10 +674,8 @@ function generateCross(){
 
   }
 
-
   let current =
     n1 + "|" + n2 + "|" + a;
-
 
   if(current === lastCrossInput){
 
@@ -759,16 +683,12 @@ function generateCross(){
 
   }
 
-
   lastCrossInput = current;
-
 
   document.getElementById("crossGrid")
     .innerHTML = "";
 
-
   dataArr = [];
-
 
   for(let i of n1){
 
@@ -776,12 +696,10 @@ function generateCross(){
 
       let pair = i + j;
 
-
       let exist =
         dataArr.find(item =>
           item.number === pair
         );
-
 
       if(exist){
 
@@ -798,7 +716,6 @@ function generateCross(){
         });
 
       }
-
 
       document.getElementById("crossGrid")
         .innerHTML += `
@@ -819,7 +736,6 @@ function generateCross(){
 
   }
 
-
   updateTotal();
 
 }
@@ -835,12 +751,10 @@ function generateCopy(){
     document.getElementById("digits")
       .value.trim();
 
-
   let a =
     Number(
       document.getElementById("amt").value
     );
-
 
   if(!d || a <= 0){
 
@@ -850,10 +764,8 @@ function generateCopy(){
 
   }
 
-
   let current =
     d + "|" + a;
-
 
   if(current === lastCopyInput){
 
@@ -861,9 +773,7 @@ function generateCopy(){
 
   }
 
-
   lastCopyInput = current;
-
 
   document.getElementById("table")
     .innerHTML = `
@@ -876,13 +786,10 @@ function generateCopy(){
 
     `;
 
-
   dataArr = [];
-
 
   let arr =
     d.match(/.{1,2}/g);
-
 
   if(!arr){
 
@@ -890,9 +797,7 @@ function generateCopy(){
 
   }
 
-
   arr.forEach(num => {
-
 
     if(num.length === 1){
 
@@ -900,12 +805,10 @@ function generateCopy(){
 
     }
 
-
     let exist =
       dataArr.find(item =>
         item.number === num
       );
-
 
     if(exist){
 
@@ -922,7 +825,6 @@ function generateCopy(){
       });
 
     }
-
 
     document.getElementById("table")
       .innerHTML += `
@@ -941,17 +843,16 @@ function generateCopy(){
 
   });
 
-
   updateTotal();
 
 }
 
 
+/* =========================
+   SUBMIT
+========================= */
 
-  /*
-    Already submitting?
-    Duplicate click ignore
-  */
+async function submitAll(){
 
   if(isSubmitting){
 
@@ -959,12 +860,15 @@ function generateCopy(){
 
   }
 
+  if(!user){
 
-  /*
-    Data check
-  */
+    alert("Login again");
 
-  if(dataArr.length === 0){
+    return;
+
+  }
+
+  if(dataArr.length === 0 || total <= 0){
 
     alert("Kuch add karo pehle");
 
@@ -972,17 +876,10 @@ function generateCopy(){
 
   }
 
-
-  /*
-    Submit lock
-  */
-
   isSubmitting = true;
-
 
   const submitButton =
     document.querySelector(".submit");
-
 
   if(submitButton){
 
@@ -990,99 +887,138 @@ function generateCopy(){
       "none";
 
     submitButton.innerText =
-      "SENDING...";
+      "CHECKING...";
 
   }
 
-
   try{
 
+    /* GET CURRENT BALANCE */
 
-    if(!user){
+    const {data:userData,error:balanceError} =
+      await client
 
-      throw new Error("User login missing");
+        .from("login")
+
+        .select("balance")
+
+        .eq("id",user.id)
+
+        .single();
+
+
+    if(balanceError){
+
+      throw balanceError;
 
     }
 
 
-    /*
-      Unique ID for this demo submission
-    */
-
-    const submitId =
-      crypto.randomUUID();
+    const balance =
+      Number(userData.balance) || 0;
 
 
-    /*
-      DEMO:
-      History save only.
-      Wallet balance is NOT deducted.
-    */
+    /* BALANCE CHECK */
 
-    const {error} = await client
+    if(balance < total){
 
-      .from("history")
-
-      .insert({
-
-        user_id:user.id,
-
-        market:market,
-
-        data:dataArr,
-
-        total:total,
-
-        created_at:
-          new Date().toISOString()
-
-      });
-
-
-    if(error){
-
-      console.error(
-        "History error:",
-        error
+      alert(
+        "Balance kam hai. Submit nahi hua."
       );
 
-      throw error;
+      return;
 
     }
 
 
-    alert("DEMO GAME OK ✅");
+    /* UPDATE BALANCE */
+
+    if(submitButton){
+
+      submitButton.innerText =
+        "SAVING...";
+
+    }
+
+    const newBalance =
+      balance - total;
 
 
-    /*
-      Successful submit ke baad
-      current game clear
-    */
+    const {error:updateError} =
+      await client
+
+        .from("login")
+
+        .update({
+          balance:newBalance
+        })
+
+        .eq("id",user.id);
+
+
+    if(updateError){
+
+      throw updateError;
+
+    }
+
+
+    /* SAVE HISTORY ONLY AFTER
+       BALANCE UPDATE */
+
+    const {error:historyError} =
+      await client
+
+        .from("history")
+
+        .insert({
+
+          user_id:user.id,
+
+          market:market,
+
+          data:dataArr,
+
+          total:total,
+
+          created_at:
+            new Date().toISOString()
+
+        });
+
+
+    if(historyError){
+
+      throw historyError;
+
+    }
+
+
+    /* REFRESH WALLET */
+
+    await loadUser();
+
+
+    alert("GAME OK ✅");
+
 
     resetGameData();
 
 
   }catch(error){
 
-    console.error(error);
-
-
-    alert(
-      "Network/database problem.\n" +
-      "Demo submit nahi hua."
+    console.error(
+      "SUBMIT ERROR:",
+      error
     );
 
+    alert(
+      "Database error. Submit nahi hua."
+    );
 
   }finally{
 
-
-    /*
-      Success ya error dono mein
-      lock release
-    */
-
     isSubmitting = false;
-
 
     if(submitButton){
 
@@ -1099,7 +1035,6 @@ function generateCopy(){
 }
 
 </script>
-
 
 <script src="menu.js"></script>
 
